@@ -7,7 +7,7 @@
 		<li>Song: {{ song }}</li>
 		<li>Artist: Placeholder{{ song.artist }}</li>
 		<li>Votes: Placeholder{{ song.votes }}</li>
-		<li><a href="{% url djpandora_vote song.id %}?vote=like">Like</a> or <a href="{% url djpandora_vote song.id %}?vote=like">Dislike</a></li>
+		<li>{% if upboat_avail %}<a href="{% url djpandora_vote song.id %}?vote=like">Like</a>{% endif %} {% if downboat_avail %}<a href="{% url djpandora_vote song.id %}?vote=dislike">Dislike</a>{% endif %}</li>
         <li>Time Remaining: 1:15</li>
 	</ul>
 {% endblock %}
