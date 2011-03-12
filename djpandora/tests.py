@@ -27,15 +27,14 @@ class PandoraTests(TestCase):
     def test_vote(self):
         ## Bit of boiler plate
         self.client.login(username='tester', password='tester')
-        valid_url = reverse('djpandora_vote', kwargs={'song_id': 1})
-        invalid_url = reverse('djpandora_vote', kwargs={'song_id': 2})
+        url = reverse('djpandora_vote')
 
         ## 404
-        response = self.client.get(invalid_url)
+        response = self.client.get('%s?song_id=2&vote=like' % url)
         self.assertEquals(response.status_code, 404)
 
         ## Received a JSON Response
-        response = self.client.get('%s?vote=like' % valid_url)
+        response = self.client.get('%s?song_id=1&vote=like' % url)
         self.assertEquals(response.status_code, 200)
         data = json.loads(response.content)
         self.assertEquals(data.get('status'), 'success')
@@ -45,7 +44,7 @@ class PandoraTests(TestCase):
         self.assertEquals(vote.value, 1)
 
         ## Post again, get a unique error
-        response = self.client.get('%s?vote=like' % valid_url)
+        response = self.client.get('%s?song_id=1&vote=like' % url)
         self.assertEquals(response.status_code, 200)
         data = json.loads(response.content)
         self.assertEquals(data.get('status'), 'failed')
