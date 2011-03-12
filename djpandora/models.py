@@ -11,9 +11,10 @@ class Station(models.Model):
 class Song(models.Model):
 
     name = models.CharField(max_length=256)
+    station = models.ForeignKey(Station)
 
     def __unicode__(self):
-        return u'%s' % self.name
+        return u'%s - %s' % (self.name, self.station)
 
 class Vote(models.Model):
 

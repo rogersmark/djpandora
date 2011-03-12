@@ -2,4 +2,11 @@
 {% block title %}Index{% endblock %}
 {% block content %}
 	<h1>Welcome to DjPandora</h1>
+	<h3>Currently Playing</h3>
+	<ul>
+		<li>Song: {{ song }}</li>
+		<li>Artist: Placeholder{{ song.artist }}</li>
+		<li>Votes: Placeholder{{ song.votes }}</li>
+		<li><a href="{% url djpandora_vote song.id %}?vote=like">Like</a> or <a href="{% url djpandora_vote song.id %}?vote=like">Dislike</a></li>
+	</ul>
 {% endblock %}

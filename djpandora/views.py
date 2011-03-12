@@ -12,20 +12,21 @@ import models, forms
 
 @login_required
 def djpandora_index(request):
-
+    song = models.Song.objects.get(id=1)
     return render_to_response('djpandora/index.html',
         locals(),
         context_instance=RequestContext(request)
     )
 
 @login_required
-def djpandora_vote(request):
-	instance = models.Vote(user=request.user)
-	form = forms.Vote(request.POST or None, instance=instance)
-	if form.is_valid():
-		form.save()
-		return HttpResponseRedirect(reverse('djpandora_index'))
-	return render_to_response('djpandora/vote.html',
+def djpandora_vote(request, song_id):
+    song = get_object_or_404(models.Song, song_id)
+    instance = models.Vote(user=request.user, song=song, station=song.station)
+    form = forms.Vote(request.POST or None, instance=instance)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse('djpandora_index'))
+    return render_to_response('djpandora/vote.html',
         locals(),
         context_instance=RequestContext(request)
     )
