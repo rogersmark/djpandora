@@ -17,3 +17,15 @@ def djpandora_index(request):
         locals(),
         context_instance=RequestContext(request)
     )
+
+@login_required
+def djpandora_vote(request):
+	instance = models.Vote(user=request.user)
+	form = forms.Vote(request.POST or None, instance=instance)
+	if form.is_valid():
+		form.save()
+		return HttpResponseRedirect(reverse('djpandora_index'))
+	return render_to_response('djpandora/vote.html',
+        locals(),
+        context_instance=RequestContext(request)
+    )

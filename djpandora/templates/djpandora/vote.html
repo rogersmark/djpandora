@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Vote{% endblock %}
+{% block content %}
+	<h1>Vote</h1>
+	<form method='post' action='{% url djpandora_vote %}'>{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" value="Vote" />
+	</form>
+{% endblock %}

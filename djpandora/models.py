@@ -17,6 +17,9 @@ class Song(models.Model):
 
 class Vote(models.Model):
 
+    class Meta:
+        unique_together = (('user', 'song', 'station', 'value'))
+
     user = models.ForeignKey(User)
     song = models.ForeignKey(Song)
     station = models.ForeignKey(Station)

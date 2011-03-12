@@ -1,5 +1,19 @@
 [
     {
+        "pk": 1, 
+        "model": "djpandora.station", 
+        "fields": {
+            "name": "Station1"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "djpandora.song", 
+        "fields": {
+            "name": "Test1"
+        }
+    },
+    {
         "pk": 2, 
         "model": "auth.user", 
         "fields": {
