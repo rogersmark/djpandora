@@ -8,5 +8,6 @@
 		<li>Artist: Placeholder{{ song.artist }}</li>
 		<li>Votes: Placeholder{{ song.votes }}</li>
 		<li><a href="{% url djpandora_vote song.id %}?vote=like">Like</a> or <a href="{% url djpandora_vote song.id %}?vote=like">Dislike</a></li>
+        <li>Time Remaining: 1:15</li>
 	</ul>
 {% endblock %}
