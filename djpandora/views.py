@@ -20,13 +20,18 @@ def djpandora_index(request):
 
 @login_required
 def djpandora_vote(request, song_id):
-    song = get_object_or_404(models.Song, song_id)
-    instance = models.Vote(user=request.user, song=song, station=song.station)
-    form = forms.Vote(request.POST or None, instance=instance)
+    song = get_object_or_404(models.Song, id=song_id)
+    if request.GET.get('vote') == 'like':
+        vote = 1
+    else:
+        vote = -1
+    instance = models.Vote(user=request.user)
+    post = {
+        u'station': song.station_id, u'value': vote, 
+        u'song': song.id
+    }
+    print request.user.id
+    form = forms.Vote(post, instance=instance)
     if form.is_valid():
         form.save()
-        return HttpResponseRedirect(reverse('djpandora_index'))
-    return render_to_response('djpandora/vote.html',
-        locals(),
-        context_instance=RequestContext(request)
-    )
+    return HttpResponseRedirect(reverse('djpandora_index'))
