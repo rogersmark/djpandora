@@ -48,3 +48,11 @@ class PandoraTests(TestCase):
         self.assertEquals(response.status_code, 200)
         data = json.loads(response.content)
         self.assertEquals(data.get('status'), 'failed')
+
+    def test_pandora_status(self):
+        self.client.login(username='tester', password='tester')
+        response = self.client.get(reverse('djpandora_status'))
+        self.assertEquals(response.status_code, 200)
+
+        data = json.loads(response.content)
+        self.assertEquals(data.get('status'), 'success')

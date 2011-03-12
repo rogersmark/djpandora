@@ -14,6 +14,12 @@ import models, forms
 
 @login_required
 def djpandora_index(request):
+    """
+    Main entry point.
+
+    Check to see if the user has voted on this song/station already. If so,
+    we give them the option of reversing their vote.
+    """
     song = models.Song.objects.get(id=1)
     upboat_avail = True
     downboat_avail = True
@@ -32,6 +38,13 @@ def djpandora_index(request):
 
 @login_required
 def djpandora_vote(request):
+    """
+    Receives a vote, returns JSON status
+
+    Creates a vote object and applies it to a song. If it's a duplicate we check
+    to see if our value reverses our vote, and applies that to the existing
+    vote object. This prevents a user from repeatedly voting on a song.
+    """
     song = get_object_or_404(models.Song, id=request.GET.get('song_id'))
     if request.GET.get('vote') == 'like':
         vote = 1
@@ -61,3 +74,21 @@ def djpandora_vote(request):
     return HttpResponse(json.dumps(json_status), 
                 mimetype='application/json'
     )
+
+@login_required
+def djpandora_status(request):
+    """
+    TODO: Actually call to our Pandora service
+
+    Calls the Pandora service, forms a JSON object and returns it. This function
+    should only be called via AJAX calls.
+    """
+    json_data = {
+        'title': 'Title Ajax',
+        'station': 'Station Ajax',
+        'artist': 'Artist Ajax',
+        'votes': 7,
+        'time': '1:55',
+        'status': 'success'
+    }
+    return HttpResponse(json.dumps(json_data), mimetype='application/json')

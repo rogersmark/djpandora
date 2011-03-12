@@ -21,8 +21,19 @@
         });
     }
 
+    function update_playing(){
+        url = '{% url djpandora_status %}'
+        $.getJSON(url, function(data){
+            $('#song-name').text('Song: ' + data['title']);
+            $('#artist-name').text('Artist: ' + data['artist']);
+            $('#vote-total').text('Votes: ' + data['votes']);
+            $('#station').text('Station: ' + data['station']);
+            $('#time-left').text('Time Remaining: ' + data['time']);
+        });
+    }
+
     $(document).ready(function(){
-         
+         setInterval('update_playing()', 5000);
     });
 
 </script>
@@ -31,6 +42,7 @@
 	<h1>Welcome to DjPandora</h1>
 	<h3>Currently Playing</h3>
 	<ul>
+        <li id='station'>Station: {{ song.station }}</li>
 		<li id='song-name'>Song: {{ song }}</li>
 		<li id='artist-name'>Artist: Placeholder{{ song.artist }}</li>
 		<li id='vote-total'>Votes: Placeholder{{ song.votes }}</li>
