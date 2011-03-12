@@ -1,13 +1,40 @@
 {% extends "base.html" %}
 {% block title %}Index{% endblock %}
+{% block extrahead %}
+<script type="text/javascript">
+
+    function ajax_vote(song_id, value){
+        url = '{% url djpandora_vote %}?song_id=' + song_id + '&vote=' + value
+        $.getJSON(url, function(data){
+            if(data['status'] == 'success'){
+                if(value == 'like'){
+                    link = '<a href="#" onclick="javascript:return ajax_vote(' + song_id + ', \'dislike\');">Dislike</a>';
+                    console.log(link);
+                    $('#voting').html(link);
+                }
+                else{
+                    link = '<a href="#" onclick="javascript:return ajax_vote(' + song_id + ', \'like\');">Like</a>';
+                    console.log(link);
+                    $('#voting').html(link);
+                }
+            }
+        });
+    }
+
+    $(document).ready(function(){
+         
+    });
+
+</script>
+{% endblock %}
 {% block content %}
 	<h1>Welcome to DjPandora</h1>
 	<h3>Currently Playing</h3>
 	<ul>
-		<li>Song: {{ song }}</li>
-		<li>Artist: Placeholder{{ song.artist }}</li>
-		<li>Votes: Placeholder{{ song.votes }}</li>
-		<li>{% if upboat_avail %}<a href="{% url djpandora_vote song.id %}?vote=like">Like</a>{% endif %} {% if downboat_avail %}<a href="{% url djpandora_vote song.id %}?vote=dislike">Dislike</a>{% endif %}</li>
-        <li>Time Remaining: 1:15</li>
+		<li id='song-name'>Song: {{ song }}</li>
+		<li id='artist-name'>Artist: Placeholder{{ song.artist }}</li>
+		<li id='vote-total'>Votes: Placeholder{{ song.votes }}</li>
+		<li id='voting'>{% if upboat_avail %}<a href="#" onclick="javascript:return ajax_vote({{ song.id }}, 'like');">Like</a>{% endif %} {% if downboat_avail %}<a href="#" onclick="javascript:return ajax_vote({{ song.id }}, 'dislike');">Dislike</a>{% endif %}</li>
+        <li id='time-left'>Time Remaining: 1:15</li>
 	</ul>
 {% endblock %}

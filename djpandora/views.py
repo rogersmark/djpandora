@@ -31,8 +31,8 @@ def djpandora_index(request):
     )
 
 @login_required
-def djpandora_vote(request, song_id):
-    song = get_object_or_404(models.Song, id=song_id)
+def djpandora_vote(request):
+    song = get_object_or_404(models.Song, id=request.GET.get('song_id'))
     if request.GET.get('vote') == 'like':
         vote = 1
     else:
