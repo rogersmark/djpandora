@@ -41,7 +41,7 @@ class PandoraTests(TestCase):
 
         ## Make sure we created an object
         vote = models.Vote.objects.get(id=1)
-        self.assertEquals(vote.value, 1)
+        self.assertEquals(vote.value, -1)
 
         ## Post again, get a unique error
         response = self.client.get('%s?song_id=1&vote=like' % url)

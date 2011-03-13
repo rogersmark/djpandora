@@ -14,7 +14,8 @@ setup(
     package_data = {
         'djpandora':
         ['templates/*.html',
-        'templates/djpandora/*.html'
+        'templates/djpandora/*.html',
+        'fixtures/*.json'
         ],
     },
     include_package_data=True,

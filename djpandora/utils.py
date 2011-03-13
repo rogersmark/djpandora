@@ -12,5 +12,4 @@ def get_pandora_rpc_conn():
     except AttributeError:
         port = '8123'
     s = xmlrpclib.ServerProxy('http://%s:%s' % (host, port))
-    s.login(settings.PANDORA_USER, settings.PANDORA_PASS)
     return s

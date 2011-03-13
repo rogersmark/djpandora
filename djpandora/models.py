@@ -11,6 +11,7 @@ class Station(models.Model):
 
     name = models.CharField(max_length=256)
     pandora_id = models.CharField(max_length=256)
+    current = models.BooleanField(default=False)
 
     def __unicode__(self):
         return u'%s' % self.name
@@ -23,11 +24,14 @@ class Song(models.Model):
     this out once the backend service in pypandora is further along.
     """
 
-    name = models.CharField(max_length=256)
+    title = models.CharField(max_length=256)
     station = models.ForeignKey(Station)
+    album = models.CharField(max_length=512)
+    artist = models.CharField(max_length=256)
+    pandora_id = models.CharField(max_length=128)
 
     def __unicode__(self):
-        return u'%s - %s' % (self.name, self.station)
+        return u'%s - %s' % (self.title, self.station)
 
 class Vote(models.Model):
     """

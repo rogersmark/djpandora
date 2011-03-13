@@ -28,10 +28,14 @@
             $('#station').text('Station: ' + data['station']);
             $('#time-left').text('Time Remaining: ' + data['time']);
             $('#playlist').html(data['upcoming']);
+            $('#voting').html(data['vote-html']);
         });
+        $('#song-loading').hide();
+        $('song-information').show();
     }
 
     $(document).ready(function(){
+        $('song-information').hide();
         update_playing();
         setInterval('update_playing()', 15000);
     });
@@ -41,12 +45,13 @@
 {% block content %}
 	<h1>Welcome to DjPandora</h1>
 	<h3>Currently Playing</h3>
-	<ul>
+    <p id="song-loading">Loading...</p>
+	<ul id="song-information">
         <li id='station'>Station: {{ song.station }}</li>
 		<li id='song-name'>Song: {{ song }}</li>
 		<li id='artist-name'>Artist: Placeholder{{ song.artist }}</li>
 		<li id='vote-total'>Votes: Placeholder{{ song.votes }}</li>
-		<li id='voting'>{% if upboat_avail %}<a href="#" onclick="javascript:return ajax_vote({{ song.id }}, 'like');">Like</a>{% endif %} {% if downboat_avail %}<a href="#" onclick="javascript:return ajax_vote({{ song.id }}, 'dislike');">Dislike</a>{% endif %}</li>
+		<li id='voting'></li>
         <li id='time-left'>Time Remaining: 1:15</li>
 	</ul>
     <div id='playlist'>

@@ -20,16 +20,7 @@ def djpandora_index(request):
     Check to see if the user has voted on this song/station already. If so,
     we give them the option of reversing their vote.
     """
-    song = models.Song.objects.get(id=1)
-    upboat_avail = True
-    downboat_avail = True
-    user_vote = song.vote_set.filter(user=request.user)
-    if user_vote:
-        user_vote = user_vote[0]
-        if user_vote.value == 1:
-            upboat_avail = False
-        elif user_vote.value == -1:
-            downboat_avail = False
+
 
     return render_to_response('djpandora/index.html',
         locals(),
@@ -85,23 +76,63 @@ def djpandora_status(request):
     """
     try:
         s = utils.get_pandora_rpc_conn()
-        playlist = s.get_playlist('299182186353879350')
+        station = models.Station.objects.get(current=True)
+        playlist = s.get_playlist(station.pandora_id)
+        song_info = s.current_song()
+        song, created = models.Song.objects.get_or_create(
+            title=song_info['title'],
+            album=song_info['album'],
+            pandora_id=song_info['id'],
+            artist=song_info['artist'],
+            station=station
+        )
     except Exception, e:
         ## Likely a refusal of connection
         playlist = []
+        song = None
+        song_info = {
+            'album': 'null',
+            'artist': 'null',
+            'id': 'null',
+            'length': 0,
+            'progress': 0,
+            'title': 'null'
+        }
 
     playlist_html = '<ul><li>Upcoming Songs<ul>'
     for x in playlist:
-        playlist_html += '<li>%s by %s</li>' % (x['artist'], x['title'])
+        playlist_html += '<li>%s by %s</li>' % (x['title'], x['artist'])
 
     playlist_html += '</ul></li></ul>'
-
+    upboat_avail = True
+    downboat_avail = True
+    vote_total = 0
+    if song:
+        for vote in song.vote_set.all():
+            vote_total += vote.value
+        user_vote = song.vote_set.filter(user=request.user)
+        if user_vote:
+            user_vote = user_vote[0]
+            if user_vote.value == 1:
+                upboat_avail = False
+            elif user_vote.value == -1:
+                downboat_avail = False
+        if upboat_avail and downboat_avail:
+            vote_html = """<a href="#" onclick="javascript:return ajax_vote(%s, 'like');">Like</a> - <a href="#" onclick="javascript:return ajax_vote(%s, 'dislike');">Dislike</a>""" % (song.id, song.id)
+        elif upboat_avail and not downboat_avail:
+            vote_html = """<a href="#" onclick="javascript:return ajax_vote(%s, 'like');">Like</a>""" % (song.id)
+        else:
+            vote_html = """<a href="#" onclick="javascript:return ajax_vote(%s, 'dislike');">Dislike</a>""" % (song.id)
+    else:
+        vote_html = ''
     json_data = {
-        'title': 'Title Ajax',
-        'station': 'Station Ajax',
-        'artist': 'Artist Ajax',
-        'votes': 7,
-        'time': '1:55',
+        'title': song_info['title'],
+        'station': 'Station',
+        'artist': song_info['artist'],
+        'votes': vote_total,
+        'vote-html': vote_html,
+        'time': song_info['length'],
+        'album': song_info['album'],
         'upcoming': playlist_html,
         'status': 'success'
     }
