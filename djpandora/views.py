@@ -77,6 +77,7 @@ def djpandora_status(request):
     try:
         s = utils.get_pandora_rpc_conn()
         station = models.Station.objects.get(current=True)
+        station_name = station.name
         playlist = s.get_playlist(station.pandora_id)
         song_info = s.current_song()
         song, created = models.Song.objects.get_or_create(
@@ -91,6 +92,7 @@ def djpandora_status(request):
     except Exception, e:
         ## Likely a refusal of connection
         print e
+        station_name = 'null'
         playlist = []
         song = None
         song_info = {
@@ -131,7 +133,7 @@ def djpandora_status(request):
         vote_html = ''
     json_data = {
         'title': song_info['title'],
-        'station': 'Station',
+        'station': station_name,
         'artist': song_info['artist'],
         'votes': vote_total,
         'vote-html': vote_html,

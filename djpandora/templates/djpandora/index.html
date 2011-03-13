@@ -22,20 +22,26 @@
     function update_playing(){
         url = '{% url djpandora_status %}'
         $.getJSON(url, function(data){
-            $('#song-name').text('Song: ' + data['title']);
-            $('#artist-name').text('Artist: ' + data['artist']);
-            $('#vote-total').text('Votes: ' + data['votes']);
-            $('#station').text('Station: ' + data['station']);
-            $('#time-left').progressbar( "option", "value", data['time']);
-            $('#playlist').html(data['upcoming']);
-            $('#voting').html(data['vote-html']);
+            if (data['title'] == 'null'){
+                $('#song-loading').show();
+                $('#song-information').hide();
+            }
+            else {
+                $('#song-loading').hide();
+                $('#song-information').show();
+                $('#song-name').text('Song: ' + data['title']);
+                $('#artist-name').text('Artist: ' + data['artist']);
+                $('#vote-total').text('Votes: ' + data['votes']);
+                $('#station').text('Station: ' + data['station']);
+                $('#time-left').progressbar( "option", "value", data['time']);
+                $('#playlist').html(data['upcoming']);
+                $('#voting').html(data['vote-html']);
+            }
         });
-        $('#song-loading').hide();
-        $('song-information').show();
     }
 
     $(document).ready(function(){
-        $('#time-left').progressbar({value: 37});
+        $('#time-left').progressbar({value: 0});
         $('song-information').hide();
         update_playing();
         setInterval('update_playing()', 15000);
@@ -47,14 +53,15 @@
 	<h1>Welcome to DjPandora</h1>
 	<h3>Currently Playing</h3>
     <p id="song-loading">Loading...</p>
-	<ul id="song-information">
-        <li id='station'>Station: {{ song.station }}</li>
-		<li id='song-name'>Song: {{ song }}</li>
-		<li id='artist-name'>Artist: Placeholder{{ song.artist }}</li>
-		<li id='vote-total'>Votes: Placeholder{{ song.votes }}</li>
-		<li id='voting'></li>
-        <li id='time-left'></li>
-	</ul>
-    <div id='playlist'>
+    <div id="song-information">
+    	<ul>
+            <li id='station'></li>
+    		<li id='song-name'></li>
+    		<li id='artist-name'></li>
+    		<li id='vote-total'></li>
+    		<li id='voting'></li>
+            <li id='time-left'></li>
+    	</ul>
+        <div id='playlist'></div>
     </div>
 {% endblock %}
