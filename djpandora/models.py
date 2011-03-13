@@ -10,6 +10,7 @@ class Station(models.Model):
     """
 
     name = models.CharField(max_length=256)
+    pandora_id = models.CharField(max_length=256)
 
     def __unicode__(self):
         return u'%s' % self.name
