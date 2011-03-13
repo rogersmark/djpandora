@@ -86,17 +86,21 @@ def djpandora_status(request):
             artist=song_info['artist'],
             station=station
         )
+        song_info['time'] = int(float(song_info['progress']) / float(song_info['length']) * 100.0)
+        print song_info
     except Exception, e:
         ## Likely a refusal of connection
+        print e
         playlist = []
         song = None
         song_info = {
             'album': 'null',
             'artist': 'null',
             'id': 'null',
-            'length': 0,
+            'length': 50,
             'progress': 0,
-            'title': 'null'
+            'title': 'null',
+            'time': 50,
         }
 
     playlist_html = '<ul><li>Upcoming Songs<ul>'
@@ -131,7 +135,7 @@ def djpandora_status(request):
         'artist': song_info['artist'],
         'votes': vote_total,
         'vote-html': vote_html,
-        'time': song_info['length'],
+        'time': song_info['time'],
         'album': song_info['album'],
         'upcoming': playlist_html,
         'status': 'success'

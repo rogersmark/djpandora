@@ -26,7 +26,7 @@
             $('#artist-name').text('Artist: ' + data['artist']);
             $('#vote-total').text('Votes: ' + data['votes']);
             $('#station').text('Station: ' + data['station']);
-            $('#time-left').text('Time Remaining: ' + data['time']);
+            $('#time-left').progressbar( "option", "value", data['time']);
             $('#playlist').html(data['upcoming']);
             $('#voting').html(data['vote-html']);
         });
@@ -35,6 +35,7 @@
     }
 
     $(document).ready(function(){
+        $('#time-left').progressbar({value: 37});
         $('song-information').hide();
         update_playing();
         setInterval('update_playing()', 15000);
@@ -52,7 +53,7 @@
 		<li id='artist-name'>Artist: Placeholder{{ song.artist }}</li>
 		<li id='vote-total'>Votes: Placeholder{{ song.votes }}</li>
 		<li id='voting'></li>
-        <li id='time-left'>Time Remaining: 1:15</li>
+        <li id='time-left'></li>
 	</ul>
     <div id='playlist'>
     </div>
