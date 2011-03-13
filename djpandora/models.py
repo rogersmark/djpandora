@@ -2,6 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Station(models.Model):
+    """
+    A Pandora station, automatically created from calls to our Pandora service
+
+    Currently stubbed out, and just has a name. Will add more data to flesh
+    this out once the backend service in pypandora is further along.
+    """
 
     name = models.CharField(max_length=256)
 
@@ -9,6 +15,12 @@ class Station(models.Model):
         return u'%s' % self.name
 
 class Song(models.Model):
+    """
+    A Pandora song tied to a Station, automatically created from calls to our Pandora service
+
+    Currently stubbed out, and just has a name and station. Will add more data to flesh
+    this out once the backend service in pypandora is further along.
+    """
 
     name = models.CharField(max_length=256)
     station = models.ForeignKey(Station)
@@ -17,6 +29,10 @@ class Song(models.Model):
         return u'%s - %s' % (self.name, self.station)
 
 class Vote(models.Model):
+    """
+    A user's voting result. Votes are tallied for specific songs on 
+    specific station. 
+    """
 
     class Meta:
         unique_together = (('user', 'song', 'station'))

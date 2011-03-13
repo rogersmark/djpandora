@@ -1,4 +1,4 @@
-DjPandora Tutorial
+Tutorial
 =====================================
 
 TODO

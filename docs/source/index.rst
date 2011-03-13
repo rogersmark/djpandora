@@ -13,6 +13,7 @@ Contents:
 
    introduction
    tutorial
+   features
 
 Indices and tables
 ==================
