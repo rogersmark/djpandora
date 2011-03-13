@@ -9,12 +9,10 @@
             if(data['status'] == 'success'){
                 if(value == 'like'){
                     link = '<a href="#" onclick="javascript:return ajax_vote(' + song_id + ', \'dislike\');">Dislike</a>';
-                    console.log(link);
                     $('#voting').html(link);
                 }
                 else{
                     link = '<a href="#" onclick="javascript:return ajax_vote(' + song_id + ', \'like\');">Like</a>';
-                    console.log(link);
                     $('#voting').html(link);
                 }
             }
@@ -29,11 +27,13 @@
             $('#vote-total').text('Votes: ' + data['votes']);
             $('#station').text('Station: ' + data['station']);
             $('#time-left').text('Time Remaining: ' + data['time']);
+            $('#playlist').html(data['upcoming']);
         });
     }
 
     $(document).ready(function(){
-         setInterval('update_playing()', 5000);
+        update_playing();
+        setInterval('update_playing()', 15000);
     });
 
 </script>
@@ -49,4 +49,6 @@
 		<li id='voting'>{% if upboat_avail %}<a href="#" onclick="javascript:return ajax_vote({{ song.id }}, 'like');">Like</a>{% endif %} {% if downboat_avail %}<a href="#" onclick="javascript:return ajax_vote({{ song.id }}, 'dislike');">Dislike</a>{% endif %}</li>
         <li id='time-left'>Time Remaining: 1:15</li>
 	</ul>
+    <div id='playlist'>
+    </div>
 {% endblock %}

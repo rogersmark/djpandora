@@ -3,7 +3,7 @@ import xmlrpclib
 from django.core.management.base import NoArgsCommand
 from django.conf import settings
 
-from djpandora import models
+from djpandora import models, utils
 
 class Command(NoArgsCommand):
     """
@@ -11,16 +11,7 @@ class Command(NoArgsCommand):
     """
 
     def handle_noargs(self, **options):
-        try:
-            host = settings.PANDORA_RPC_HOST
-        except AttributeError:
-            host = 'localhost'
-        try:
-            port = settings.PANDORA_RPC_PORT
-        except AttributeError:
-            port = '8123'
-        s = xmlrpclib.ServerProxy('http://%s:%s' % (host, port))
-        s.login(settings.PANDORA_USER, settings.PANDORA_PASS); 
+        s = utils.get_pandora_rpc_conn()
         stations = s.get_stations()
         for (id, station_name) in stations.items():
             obj, created = models.Station.objects.get_or_create(

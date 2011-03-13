@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.mail import send_mail
 
-import models, forms
+import models, forms, utils
 
 @login_required
 def djpandora_index(request):
@@ -83,12 +83,26 @@ def djpandora_status(request):
     Calls the Pandora service, forms a JSON object and returns it. This function
     should only be called via AJAX calls.
     """
+    try:
+        s = utils.get_pandora_rpc_conn()
+        playlist = s.get_playlist('299182186353879350')
+    except Exception, e:
+        ## Likely a refusal of connection
+        playlist = []
+
+    playlist_html = '<ul><li>Upcoming Songs<ul>'
+    for x in playlist:
+        playlist_html += '<li>%s by %s</li>' % (x['artist'], x['title'])
+
+    playlist_html += '</ul></li></ul>'
+
     json_data = {
         'title': 'Title Ajax',
         'station': 'Station Ajax',
         'artist': 'Artist Ajax',
         'votes': 7,
         'time': '1:55',
+        'upcoming': playlist_html,
         'status': 'success'
     }
     return HttpResponse(json.dumps(json_data), mimetype='application/json')
