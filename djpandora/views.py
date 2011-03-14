@@ -105,7 +105,7 @@ def djpandora_status(request):
             'time': 50,
         }
 
-    playlist_html = '<ul><li>Upcoming Songs<ul>'
+    playlist_html = '<h4>Upcoming Songs</h4><ul>'
     for x in playlist:
         playlist_html += '<li>%s by %s</li>' % (x['title'], x['artist'])
 
@@ -142,4 +142,17 @@ def djpandora_status(request):
         'upcoming': playlist_html,
         'status': 'success'
     }
+    return HttpResponse(json.dumps(json_data), mimetype='application/json')
+
+@login_required
+def djpandora_stations(request):
+    json_data = []
+    stations = models.Station.objects.filter(account=settings.PANDORA_USER)
+    html = '<h4>Stations</h4><ul>'
+    for x in stations:
+        html += '<li><a href="#" onclick="javascript: return station_vote(%s);">%s</a></li>' % (
+            x.id, x.name
+        )
+    html += '</ul>'
+    json_data = html
     return HttpResponse(json.dumps(json_data), mimetype='application/json')

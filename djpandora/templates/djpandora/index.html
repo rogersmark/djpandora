@@ -40,11 +40,25 @@
         });
     }
 
+    function station_check(){
+        url = '{% url djpandora_stations %}'
+        $.getJSON(url, function(data){
+            $('#stations').html(data); 
+        });
+
+    }
+
+    function station_vote(){
+        return false;
+    }
+
     $(document).ready(function(){
         $('#time-left').progressbar({value: 0});
         $('song-information').hide();
         update_playing();
+        station_check();
         setInterval('update_playing()', 15000);
+        setInterval('station_check()', 30000);
     });
 
 </script>
@@ -63,5 +77,6 @@
             <li id='time-left'></li>
     	</ul>
         <div id='playlist'></div>
+        <div id='stations'></div>
     </div>
 {% endblock %}
