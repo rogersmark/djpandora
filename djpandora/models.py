@@ -12,6 +12,7 @@ class Station(models.Model):
     name = models.CharField(max_length=256)
     pandora_id = models.CharField(max_length=256)
     current = models.BooleanField(default=False)
+    account = models.CharField(max_length=256, blank=True, null=True)
 
     def __unicode__(self):
         return u'%s' % self.name

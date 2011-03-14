@@ -17,3 +17,6 @@ class Command(NoArgsCommand):
             obj, created = models.Station.objects.get_or_create(
                 name=station_name, pandora_id=id
             )
+            if not obj.account:
+                obj.account = settings.PANDORA_USER
+                obj.save()
