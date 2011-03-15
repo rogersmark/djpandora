@@ -148,7 +148,7 @@ def djpandora_status(request):
 def djpandora_stations(request):
     json_data = []
     stations = models.Station.objects.filter(account=settings.PANDORA_USER)
-    html = '<h4>Stations</h4><ul>'
+    html = '<ul>'
     for x in stations:
         html += '<li><a href="#" onclick="javascript: return station_vote(%s);">%s</a></li>' % (
             x.id, x.name

@@ -53,6 +53,7 @@
     }
 
     $(document).ready(function(){
+        $( "#accordion" ).accordion();
         $('#time-left').progressbar({value: 0});
         $('song-information').hide();
         update_playing();
@@ -65,18 +66,23 @@
 {% endblock %}
 {% block content %}
 	<h1>Welcome to DjPandora</h1>
-	<h3>Currently Playing</h3>
-    <p id="song-loading">Loading...</p>
-    <div id="song-information">
-    	<ul>
-            <li id='station'></li>
-    		<li id='song-name'></li>
-    		<li id='artist-name'></li>
-    		<li id='vote-total'></li>
-    		<li id='voting'></li>
-            <li id='time-left'></li>
-    	</ul>
-        <div id='playlist'></div>
-        <div id='stations'></div>
+
+    <div id="accordion">
+        <h3><a href="#">Song Information</a></h3>
+            <div>
+                <p id="song-loading">Loading...</p>
+                <ul id="song-information">
+                    <li id='station'></li>
+                    <li id='song-name'></li>
+                    <li id='artist-name'></li>
+                    <li id='vote-total'></li>
+                    <li id='voting'></li>
+                    <li id='time-left'></li>
+                </ul>
+            </div>
+        <h3><a href="#">Upcoming Songs</a></h3>
+            <div id='playlist'></div>
+        <h3><a href="#">Stations</a></h3>
+            <div id='stations'></div>
     </div>
 {% endblock %}
