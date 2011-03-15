@@ -23,6 +23,12 @@
         });
     }
 
+    function update_progress(){
+        progress += 1;
+        value = progress / length * 100;
+        $('#time-left').progressbar("option", "value", value);
+    }
+
     function update_playing(){
         url = '{% url djpandora_status %}'
         $.getJSON(url, function(data){
@@ -37,9 +43,11 @@
                 $('#artist-name').text('Artist: ' + data['artist']);
                 $('#vote-total').html('Votes: <span id="vote-count">' + data['votes'] + '</span>');
                 $('#station').text('Station: ' + data['station']);
-                $('#time-left').progressbar( "option", "value", data['time']);
                 $('#playlist').html(data['upcoming']);
                 $('#voting').html(data['vote-html']);
+                $('#time-left').progressbar( "option", "value", data['time']);
+                progress = data['progress'];
+                length = data['length'];
             }
         });
     }
@@ -57,6 +65,8 @@
     }
 
     $(document).ready(function(){
+        var progress = 0;
+        var length = 0;
         $( "#accordion" ).accordion();
         $('#time-left').progressbar({value: 0});
         $('song-information').hide();
@@ -64,6 +74,7 @@
         station_check();
         setInterval('update_playing()', 15000);
         setInterval('station_check()', 30000);
+        setInterval('update_progress()', 1500);
     });
 
 </script>

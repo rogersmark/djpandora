@@ -91,6 +91,7 @@ def djpandora_status(request):
     except Exception, e:
         ## Likely a refusal of connection
         print e
+        time_left = 0
         station_name = 'null'
         playlist = []
         song = None
@@ -139,7 +140,9 @@ def djpandora_status(request):
         'time': song_info['time'],
         'album': song_info['album'],
         'upcoming': playlist_html,
-        'status': 'success'
+        'status': 'success',
+        'progress': song_info['progress'],
+        'length': song_info['length']
     }
     return HttpResponse(json.dumps(json_data), mimetype='application/json')
 
