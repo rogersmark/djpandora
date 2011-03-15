@@ -10,10 +10,14 @@
                 if(value == 'like'){
                     link = '<a href="#" onclick="javascript:return ajax_vote(' + song_id + ', \'dislike\');">Dislike</a>';
                     $('#voting').html(link);
+                    votes = parseInt($('#vote-count').text());
+                    $('#vote-count').text(votes + 1);
                 }
                 else{
                     link = '<a href="#" onclick="javascript:return ajax_vote(' + song_id + ', \'like\');">Like</a>';
                     $('#voting').html(link);
+                    votes = parseInt($('#vote-count').text());
+                    $('#vote-count').text(votes - 1);
                 }
             }
         });
@@ -31,7 +35,7 @@
                 $('#song-information').show();
                 $('#song-name').text('Song: ' + data['title']);
                 $('#artist-name').text('Artist: ' + data['artist']);
-                $('#vote-total').text('Votes: ' + data['votes']);
+                $('#vote-total').html('Votes: <span id="vote-count">' + data['votes'] + '</span>');
                 $('#station').text('Station: ' + data['station']);
                 $('#time-left').progressbar( "option", "value", data['time']);
                 $('#playlist').html(data['upcoming']);
