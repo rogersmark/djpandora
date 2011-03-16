@@ -2,6 +2,14 @@
     width: 400px;
 }
 
+#main-content ul {
+    list-style-type: none;
+}
+
 .warning {
     color: #EE0000;
+}
+
+.tall-pane {
+    height: 250px;
 }
