@@ -4,8 +4,9 @@
         "model": "djpandora.station", 
         "fields": {
             "current": false, 
-            "pandora_id": "330415158557927788", 
-            "name": "DragonForce Radio"
+            "pandora_id": "299182186353879350", 
+            "account": "f4nt@f4ntasmic.com", 
+            "name": "Dead Kennedys Radio"
         }
     }, 
     {
@@ -13,8 +14,9 @@
         "model": "djpandora.station", 
         "fields": {
             "current": false, 
-            "pandora_id": "355662848929556844", 
-            "name": "Phil Collins Radio"
+            "pandora_id": "339806143113029942", 
+            "account": "f4nt@f4ntasmic.com", 
+            "name": "Black Eyed Peas Radio"
         }
     }, 
     {
@@ -22,8 +24,9 @@
         "model": "djpandora.station", 
         "fields": {
             "current": false, 
-            "pandora_id": "241917705316198764", 
-            "name": "Eurodance"
+            "pandora_id": "316430633280694582", 
+            "account": "f4nt@f4ntasmic.com", 
+            "name": "Gorillaz Radio"
         }
     }, 
     {
@@ -31,8 +34,9 @@
         "model": "djpandora.station", 
         "fields": {
             "current": false, 
-            "pandora_id": "239403367036610924", 
-            "name": "Talking Heads Radio"
+            "pandora_id": "314976864160409910", 
+            "account": "f4nt@f4ntasmic.com", 
+            "name": "(Hed) P.E. Radio"
         }
     }, 
     {
@@ -40,8 +44,9 @@
         "model": "djpandora.station", 
         "fields": {
             "current": false, 
-            "pandora_id": "259625189757675884", 
-            "name": "Stereo Love Radio"
+            "pandora_id": "316578302846265654", 
+            "account": "f4nt@f4ntasmic.com", 
+            "name": "Guns N' Roses Radio"
         }
     }, 
     {
@@ -49,17 +54,19 @@
         "model": "djpandora.station", 
         "fields": {
             "current": false, 
-            "pandora_id": "241916446890781036", 
-            "name": "Lady Gaga Radio"
+            "pandora_id": "224796866070407478", 
+            "account": "f4nt@f4ntasmic.com", 
+            "name": "Hyper Crush Radio"
         }
     }, 
     {
         "pk": 7, 
         "model": "djpandora.station", 
         "fields": {
-            "current": false, 
-            "pandora_id": "313655775262140780", 
-            "name": "Ben Frost Radio"
+            "current": true, 
+            "pandora_id": "375716695387367734", 
+            "account": "f4nt@f4ntasmic.com", 
+            "name": "Cake Radio"
         }
     }, 
     {
@@ -67,8 +74,9 @@
         "model": "djpandora.station", 
         "fields": {
             "current": false, 
-            "pandora_id": "313664884887775596", 
-            "name": "Miles Davis Radio"
+            "pandora_id": "353901590123342134", 
+            "account": "f4nt@f4ntasmic.com", 
+            "name": "Deadmau5 Radio"
         }
     }, 
     {
@@ -76,8 +84,9 @@
         "model": "djpandora.station", 
         "fields": {
             "current": false, 
-            "pandora_id": "348736385236068716", 
-            "name": "El-P Radio"
+            "pandora_id": "72281001136449846", 
+            "account": "f4nt@f4ntasmic.com", 
+            "name": "f4nt's QuickMix"
         }
     }, 
     {
@@ -85,8 +94,9 @@
         "model": "djpandora.station", 
         "fields": {
             "current": false, 
-            "pandora_id": "351247575304628588", 
-            "name": "Britney Spears Radio"
+            "pandora_id": "312441145533622582", 
+            "account": "f4nt@f4ntasmic.com", 
+            "name": "Mindless Self Indulgence Radio"
         }
     }, 
     {
@@ -94,8 +104,9 @@
         "model": "djpandora.station", 
         "fields": {
             "current": false, 
-            "pandora_id": "341767478675761516", 
-            "name": "The Miseducation Of Lauryn Hill Radio"
+            "pandora_id": "334128612959545654", 
+            "account": "f4nt@f4ntasmic.com", 
+            "name": "Girl Talk Radio"
         }
     }, 
     {
@@ -103,8 +114,9 @@
         "model": "djpandora.station", 
         "fields": {
             "current": false, 
-            "pandora_id": "341759760619530604", 
-            "name": "Sexy Bitch Radio"
+            "pandora_id": "330745991206496566", 
+            "account": "f4nt@f4ntasmic.com", 
+            "name": "DragonForce Radio"
         }
     }, 
     {
@@ -112,371 +124,378 @@
         "model": "djpandora.station", 
         "fields": {
             "current": false, 
-            "pandora_id": "235173803502594412", 
-            "name": "Medtelligent Radio"
-        }
-    }, 
-    {
-        "pk": 14, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "414764927522171244", 
-            "name": "Delta Spirit Radio"
-        }
-    }, 
-    {
-        "pk": 15, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "351919248060180844", 
-            "name": "Giuseppe Verdi Radio"
-        }
-    }, 
-    {
-        "pk": 16, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "259624103130949996", 
-            "name": "Edward Maya & Vika Jigulina Radio"
-        }
-    }, 
-    {
-        "pk": 17, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "330745965529000300", 
-            "name": "Red Hot Chili Peppers Radio"
-        }
-    }, 
-    {
-        "pk": 18, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "383199890013940076", 
-            "name": "Norah Jones Radio"
-        }
-    }, 
-    {
-        "pk": 19, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "412602162380532076", 
-            "name": "Amon Tobin Radio"
-        }
-    }, 
-    {
-        "pk": 20, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "235174228704356716", 
-            "name": "Standards"
-        }
-    }, 
-    {
-        "pk": 21, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "235174104150305132", 
-            "name": "Alternative"
-        }
-    }, 
-    {
-        "pk": 22, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "370985368096336236", 
-            "name": "The Beatles Radio"
-        }
-    }, 
-    {
-        "pk": 23, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "236402975898069356", 
-            "name": "Jem Radio"
-        }
-    }, 
-    {
-        "pk": 24, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "413080724816521580", 
-            "name": "Phoenix Radio"
-        }
-    }, 
-    {
-        "pk": 25, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "247386366915111276", 
-            "name": "Apologize Radio"
-        }
-    }, 
-    {
-        "pk": 26, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "235173983891220844", 
-            "name": "London Philharmonic Orchestra Radio"
-        }
-    }, 
-    {
-        "pk": 27, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "383552377979922796", 
-            "name": "Bob Dylan Radio"
-        }
-    }, 
-    {
-        "pk": 28, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "235174198639585644", 
-            "name": "Tom Petty Radio"
-        }
-    }, 
-    {
-        "pk": 29, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "380140073707891052", 
-            "name": "Daft Punk Radio"
-        }
-    }, 
-    {
-        "pk": 30, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "340748592174066028", 
-            "name": "Sandstorm Radio"
-        }
-    }, 
-    {
-        "pk": 31, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "235173614524033388", 
-            "name": "Can't Tell Me Nothing Radio"
-        }
-    }, 
-    {
-        "pk": 32, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "235173623113967980", 
-            "name": "pandora47628's QuickMix"
-        }
-    }, 
-    {
-        "pk": 33, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "341788292087277932", 
-            "name": "Journey Radio"
-        }
-    }, 
-    {
-        "pk": 34, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "330965730415602028", 
-            "name": "Down On Me Radio"
-        }
-    }, 
-    {
-        "pk": 35, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "241742513600194924", 
-            "name": "Alejandro Radio"
-        }
-    }, 
-    {
-        "pk": 36, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "259602752848521580", 
-            "name": "Rusted Root Radio"
-        }
-    }, 
-    {
-        "pk": 37, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "299312667552639340", 
-            "name": "Hot Tottie Radio"
-        }
-    }, 
-    {
-        "pk": 38, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "351786181383416172", 
-            "name": "Weird Al' Yankovic (Holiday) Radio"
-        }
-    }, 
-    {
-        "pk": 39, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "242545925887617388", 
-            "name": "Peter Gabriel Radio"
-        }
-    }, 
-    {
-        "pk": 40, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "406041170339162476", 
-            "name": "Mumford & Sons Radio"
-        }
-    }, 
-    {
-        "pk": 41, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "322184489390303596", 
-            "name": "Fortunate Son Radio"
-        }
-    }, 
-    {
-        "pk": 42, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "235174056905664876", 
-            "name": "Classical"
-        }
-    }, 
-    {
-        "pk": 43, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "380932576778381676", 
-            "name": "The Rolling Stones Radio"
-        }
-    }, 
-    {
-        "pk": 44, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "403989992742840684", 
-            "name": "Metallica Radio"
-        }
-    }, 
-    {
-        "pk": 45, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "351940379299277164", 
-            "name": "Shpongle Radio"
-        }
-    }, 
-    {
-        "pk": 46, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "341709771495172460", 
-            "name": "Michael Jackson Radio"
-        }
-    }, 
-    {
-        "pk": 47, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "341530649884092780", 
-            "name": "The Christmas Song Radio"
-        }
-    }, 
-    {
-        "pk": 48, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "365320903233366380", 
-            "name": "Trance-ish Radio"
-        }
-    }, 
-    {
-        "pk": 49, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "244562348608579948", 
-            "name": "Harry Connick, Jr. Radio"
-        }
-    }, 
-    {
-        "pk": 50, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": false, 
-            "pandora_id": "366545252380567916", 
-            "name": "U2 Radio"
-        }
-    }, 
-    {
-        "pk": 51, 
-        "model": "djpandora.station", 
-        "fields": {
-            "current": true, 
-            "pandora_id": "368788419309988204", 
-            "name": "Enrique Iglesias Radio"
+            "pandora_id": "326404715573111094", 
+            "account": "f4nt@f4ntasmic.com", 
+            "name": "Basshunter Radio"
         }
     }, 
     {
         "pk": 1, 
         "model": "djpandora.song", 
         "fields": {
-            "album": "Sale El Sol", 
-            "pandora_id": "S1585687", 
-            "station": 51, 
-            "artist": "Shakira", 
-            "title": "Gordita"
+            "album": "4x4=12", 
+            "pandora_id": "S1617096", 
+            "station": 8, 
+            "artist": "Deadmau5", 
+            "title": "Cthulhu Sleeps"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "Random Album Title", 
+            "pandora_id": "S1246864", 
+            "station": 8, 
+            "artist": "Deadmau5", 
+            "title": "Some Kind Of Blue"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "Antigravity", 
+            "pandora_id": "S950156", 
+            "station": 8, 
+            "artist": "Zircon", 
+            "title": "Warhead"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "Angel On My Shoulder", 
+            "pandora_id": "S1221958", 
+            "station": 8, 
+            "artist": "Kaskade", 
+            "title": "Angel On My Shoulder (EDX's Belo Horizonte At Night Remix)"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "Daft Club", 
+            "pandora_id": "S154121", 
+            "station": 8, 
+            "artist": "Daft Punk", 
+            "title": "Aerodynamic (Daft Punk Remix)"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "Everythings Complicated EP", 
+            "pandora_id": "S1221946", 
+            "station": 8, 
+            "artist": "Deadmau5", 
+            "title": "Everything Before"
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "I Found Him Now I Must Kill Him", 
+            "pandora_id": "S1244479", 
+            "station": 8, 
+            "artist": "The Polish Ambassador", 
+            "title": "Portal Hopping"
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "Musique Vol. 1: 1993 - 2005", 
+            "pandora_id": "S458685", 
+            "station": 8, 
+            "artist": "Daft Punk", 
+            "title": "Alive"
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "Hed Kandi: The Mix USA 2009", 
+            "pandora_id": "S1310452", 
+            "station": 8, 
+            "artist": "Energy 52", 
+            "title": "Cafe Del Mar 08 (Michael Woods Out Of Office Remix)"
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "4x4=12", 
+            "pandora_id": "S1617095", 
+            "station": 8, 
+            "artist": "Deadmau5", 
+            "title": "I Said (Michael Woods Remix)"
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "Dj Masters: Unmixed", 
+            "pandora_id": "S1280247", 
+            "station": 8, 
+            "artist": "Jean Elan", 
+            "title": "Where's Your Head At (Klaas Remix)"
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "Elements Of Life", 
+            "pandora_id": "S870842", 
+            "station": 8, 
+            "artist": "Tiesto", 
+            "title": "Elements Of Life"
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "Divided By Night", 
+            "pandora_id": "S1339712", 
+            "station": 8, 
+            "artist": "The Crystal Method", 
+            "title": "Smile?"
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "4x4=12", 
+            "pandora_id": "S1617098", 
+            "station": 8, 
+            "artist": "Deadmau5", 
+            "title": "Raise Your Weapon"
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "Supernaturalistic", 
+            "pandora_id": "S1097525", 
+            "station": 8, 
+            "artist": "Sander Van Doorn", 
+            "title": "Lobby"
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "I Remember (Single)", 
+            "pandora_id": "S1483932", 
+            "station": 8, 
+            "artist": "Kaskade & Deadmau5", 
+            "title": "I Remember (Instrumental)"
+        }
+    }, 
+    {
+        "pk": 17, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "Ghetto Bass", 
+            "pandora_id": "S1310541", 
+            "station": 8, 
+            "artist": "Jack Beats", 
+            "title": "Get Down"
+        }
+    }, 
+    {
+        "pk": 18, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "Love Me Hate Me Kiss Me Kill Me", 
+            "pandora_id": "S1370041", 
+            "station": 8, 
+            "artist": "Fukkk Offf", 
+            "title": "Rock Paper Scissors"
+        }
+    }, 
+    {
+        "pk": 19, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "Songbird: Select Singles, 1999 - 2008", 
+            "pandora_id": "S1170737", 
+            "station": 8, 
+            "artist": "Deadmau5", 
+            "title": "Arguru (Progression Remix)"
+        }
+    }, 
+    {
+        "pk": 20, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "The Biz - Hypnotica", 
+            "pandora_id": "S1498335", 
+            "station": 8, 
+            "artist": "Benny Benassi", 
+            "title": "Able To Love"
+        }
+    }, 
+    {
+        "pk": 21, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "Thickfreakness", 
+            "pandora_id": "S126740", 
+            "station": 7, 
+            "artist": "The Black Keys", 
+            "title": "I Cry Alone"
+        }
+    }, 
+    {
+        "pk": 22, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "Definitive Soul", 
+            "pandora_id": "S68289", 
+            "station": 7, 
+            "artist": "Otis Redding", 
+            "title": "(Sittin' On) The Dock Of The Bay"
+        }
+    }, 
+    {
+        "pk": 23, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "Bayou Country", 
+            "pandora_id": "S14529", 
+            "station": 7, 
+            "artist": "Creedence Clearwater Revival", 
+            "title": "Penthouse Pauper"
+        }
+    }, 
+    {
+        "pk": 24, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "1967-1970", 
+            "pandora_id": "S9386", 
+            "station": 7, 
+            "artist": "The Beatles", 
+            "title": "Get Back"
+        }
+    }, 
+    {
+        "pk": 25, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "The Big Come Up", 
+            "pandora_id": "S157968", 
+            "station": 7, 
+            "artist": "The Black Keys", 
+            "title": "I'll Be Your Man"
+        }
+    }, 
+    {
+        "pk": 26, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "Room On Fire", 
+            "pandora_id": "S146697", 
+            "station": 7, 
+            "artist": "The Strokes", 
+            "title": "Reptilia"
+        }
+    }, 
+    {
+        "pk": 27, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "Keep It Hid", 
+            "pandora_id": "S1285685", 
+            "station": 7, 
+            "artist": "Dan Auerbach", 
+            "title": "Real Desire"
+        }
+    }, 
+    {
+        "pk": 28, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "Broken Boy Soldiers", 
+            "pandora_id": "S493711", 
+            "station": 7, 
+            "artist": "The Raconteurs", 
+            "title": "Together"
+        }
+    }, 
+    {
+        "pk": 29, 
+        "model": "djpandora.song", 
+        "fields": {
+            "album": "Martin Scorsese Presents The Blues: Jimi Hendrix", 
+            "pandora_id": "S142645", 
+            "station": 7, 
+            "artist": "Jimi Hendrix", 
+            "title": "Voodoo Chile (Extended Edit)"
         }
     }, 
     {
         "pk": 1, 
         "model": "djpandora.vote", 
         "fields": {
-            "station": 51, 
+            "station": 8, 
             "user": 1, 
             "value": -1, 
-            "song": 1
+            "song": 5
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "djpandora.vote", 
+        "fields": {
+            "station": 8, 
+            "user": 1, 
+            "value": 1, 
+            "song": 10
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "djpandora.vote", 
+        "fields": {
+            "station": 8, 
+            "user": 1, 
+            "value": 1, 
+            "song": 11
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "djpandora.vote", 
+        "fields": {
+            "station": 8, 
+            "user": 1, 
+            "value": -1, 
+            "song": 18
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "djpandora.vote", 
+        "fields": {
+            "station": 7, 
+            "user": 1, 
+            "value": -1, 
+            "song": 29
         }
     },
     {

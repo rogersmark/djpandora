@@ -48,20 +48,56 @@
                 $('#time-left').progressbar( "option", "value", data['time']);
                 progress = data['progress'];
                 length = data['length'];
+                if(data['station_vote']){
+                    $('#station-link-item').text('Stations (VOTE IN PROGRESS)');
+                }else{
+                    $('#station-link-item').text('Stations');
+                }
+                if(data['station_up']){
+                    $('#station-up').show();
+                } else {
+                    $('#station-up').hide();
+                }
+
+                if(data['station_down']){
+                    $('#station-down').show();
+                } else {
+                    console.log('hide the downboats!');
+                }
             }
         });
     }
 
     function station_check(){
-        url = '{% url djpandora_stations %}'
+        url = '{% url djpandora_stations %}';
         $.getJSON(url, function(data){
-            $('#stations').html(data); 
+            $('#stations').html(data['html']); 
         });
 
     }
 
-    function station_vote(){
-        return false;
+    function station_poll(station_id){
+        console.log('here');
+        url = '{% url start_station_vote %}?station_id=' + station_id;
+        $.getJSON(url, function(data){
+           //In here if we catch a failure, let user know
+        });
+    }
+
+    function station_vote(station_id, value){
+        url = '{% url station_vote %}?station_id=' + station_id + '&value=' + value;
+        $.getJSON(url, function(data){
+           // Might want to do something here at some point
+        });
+        vote_total = $('#station-vote-total').text();
+        $('#station-vote-total').text(parseInt(value) + parseInt(vote_total));
+        if (value == 1){
+            $('#station-up').hide();
+            $('#station-down').show();
+        }else{
+            $('#station-up').show();
+            $('#station-down').hide();
+        }
     }
 
     $(document).ready(function(){
@@ -97,7 +133,7 @@
             </div>
         <h3><a href="#">Upcoming Songs</a></h3>
             <div id='playlist'></div>
-        <h3><a href="#">Stations</a></h3>
+        <h3><a href="#" id="station-link-item">Stations</a></h3>
             <div id='stations'></div>
     </div>
 {% endblock %}

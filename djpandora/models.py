@@ -50,3 +50,19 @@ class Vote(models.Model):
 
     def __unicode__(self):
         return u'%s vote on %s in %s' % (self.user, self.song, self.station)
+
+
+class StationPoll(models.Model):
+
+    station = models.ForeignKey(Station)
+    time_started = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=False)
+
+class StationVote(models.Model):
+
+    class Meta:
+        unique_together = (('user', 'poll'))
+
+    user = models.ForeignKey(User)
+    poll = models.ForeignKey(StationPoll)
+    value = models.IntegerField(default=0)

@@ -1,4 +1,5 @@
 import json
+import datetime
 
 from django.http import HttpResponseNotFound, HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
@@ -131,6 +132,35 @@ def djpandora_status(request):
             vote_html = """<a href="#" onclick="javascript:return ajax_vote(%s, 'dislike');">Dislike</a>""" % (song.id)
     else:
         vote_html = ''
+
+    station_polls = models.StationPoll.objects.filter(active=True)
+    station_vote = False
+    station_upboat_avail = True
+    station_downboat_avail = True
+    for poll in station_polls:
+        now = datetime.datetime.now()
+        diff = now - poll.time_started
+        station_votes = models.StationVote.objects.filter(poll=poll,
+            user=request.user
+        )
+        if station_votes:
+            user_vote = station_votes[0]
+            if user_vote.value == 1:
+                station_upboat_avail = False
+                station_downboat_avail = True
+            else:
+                station_upboat_avail = True
+                station_downboat_avail = False
+        if diff.seconds > 300:
+            s = utils.get_pandora_rpc_conn()
+            s.play_station(poll.station.pandora_id)
+            poll.active = False
+            station_vote = True
+            poll.save()
+            ## TODO: If proper value, we switch stations
+        else:
+            station_vote = True
+
     json_data = {
         'title': song_info['title'],
         'station': station_name,
@@ -142,19 +172,75 @@ def djpandora_status(request):
         'upcoming': playlist_html,
         'status': 'success',
         'progress': song_info['progress'],
-        'length': song_info['length']
+        'length': song_info['length'],
+        'station_vote': station_vote,
+        'station_up': station_upboat_avail,
+        'station_down': station_downboat_avail
     }
     return HttpResponse(json.dumps(json_data), mimetype='application/json')
 
 @login_required
 def djpandora_stations(request):
-    json_data = []
+    json_data = {}
     stations = models.Station.objects.filter(account=settings.PANDORA_USER)
     html = '<ul>'
     for x in stations:
-        html += '<li><a href="#" onclick="javascript: return station_vote(%s);">%s</a></li>' % (
-            x.id, x.name
-        )
+        if x.stationpoll_set.filter(active=True):
+            poll = x.stationpoll_set.filter(active=True)[0]
+            vote_total = 0
+            for vote in poll.stationvote_set.all():
+                vote_total += vote.value
+            html += '<li style="color: red;">\
+                <a style="color: red;" href="#" onclick="javascript: return \
+                station_poll(%s);">%s</a>  <a href="#" id="station-up" \
+                onclick="javascript: return station_vote(%s, 1);">+</a>  \
+                <a href="#" id="station-down" \
+                onclick="javascript: return station_vote(%s, -1);">-</a>  \
+                (<span style="color: black;" \
+                id="station-vote-total">%s</span>)</li>' % (
+                x.id, x.name, x.id, x.id, vote_total
+            )
+        else:
+            html += '<li><a href="#" onclick="javascript: return station_poll(%s);">%s</a></li>' % (
+                x.id, x.name
+            )
     html += '</ul>'
-    json_data = html
+    json_data['html'] = html
+    json_data['status'] = 'success'
+    return HttpResponse(json.dumps(json_data), mimetype='application/json')
+
+@login_required
+def start_station_vote(request):
+    json_data = {
+        'status': 'success'
+    }
+    station = get_object_or_404(models.Station, id=request.GET.get('station_id'))
+    station_polls = models.StationPoll.objects.filter(active=True)
+    if station_polls:
+        json_data['status'] = 'failed'
+    else:
+        poll = models.StationPoll(station=station, active=True)
+        poll.save()
+
+    return HttpResponse(json.dumps(json_data), mimetype='application/json')
+
+@login_required
+def station_vote(request):
+    json_data = {'status': 'success'}
+    station = get_object_or_404(models.Station, id=request.GET.get('station_id'))
+    value = int(request.GET.get('value'))
+    station_poll = models.StationPoll.objects.get(active=True)
+    print station_poll.station
+    print station
+    if station_poll.station.id is not station.id:
+        json_data['status'] = 'failed'
+        print "failed"
+        return HttpResponse(json.dumps(json_data), mimetype='application/json')
+
+    vote, created = models.StationVote.objects.get_or_create(poll=station_poll,
+        user=request.user
+    )
+    vote.value = value
+    vote.save()
+    print vote
     return HttpResponse(json.dumps(json_data), mimetype='application/json')

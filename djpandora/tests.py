@@ -30,7 +30,7 @@ class PandoraTests(TestCase):
         url = reverse('djpandora_vote')
 
         ## 404
-        response = self.client.get('%s?song_id=2&vote=like' % url)
+        response = self.client.get('%s?song_id=11111112&vote=like' % url)
         self.assertEquals(response.status_code, 404)
 
         ## Received a JSON Response
@@ -56,3 +56,8 @@ class PandoraTests(TestCase):
 
         data = json.loads(response.content)
         self.assertEquals(data.get('status'), 'success')
+
+    def test_pandora_stations(self):
+        self.client.login(username='tester', password='tester')
+        response = self.client.get(reverse('djpandora_stations'))
+        self.assertEquals(response.status_code, 200)
