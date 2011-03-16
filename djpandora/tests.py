@@ -61,3 +61,15 @@ class PandoraTests(TestCase):
         self.client.login(username='tester', password='tester')
         response = self.client.get(reverse('djpandora_stations'))
         self.assertEquals(response.status_code, 200)
+
+    def test_station_poll(self):
+        self.client.login(username='tester', password='tester')
+        url = '%s?station_id=1' % reverse('start_station_vote')
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
+
+    def test_station_vote(self):
+        self.client.login(username='tester', password='tester')
+        url = '%s?station_id=1&value=1' % reverse('station_vote')
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)

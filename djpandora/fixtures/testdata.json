@@ -515,5 +515,14 @@
             "email": "", 
             "date_joined": "2010-07-22 01:44:41"
         }
+    },
+    {
+        "pk": 1, 
+        "model": "djpandora.stationpoll", 
+        "fields": {
+            "active": true, 
+            "station": 7, 
+            "time_started": "2011-03-15 18:59:04"
+        }
     }
 ]
