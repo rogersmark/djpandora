@@ -58,6 +58,9 @@ class StationPoll(models.Model):
     time_started = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=False)
 
+    def __unicode__(self):
+        return u'Poll: %s, Active=%s' % (self.station, self.active)
+
 class StationVote(models.Model):
 
     class Meta:
@@ -66,3 +69,6 @@ class StationVote(models.Model):
     user = models.ForeignKey(User)
     poll = models.ForeignKey(StationPoll)
     value = models.IntegerField(default=0)
+
+    def __unicode__(self):
+        return u'%s vote on %s' % (self.user.username, self.poll)

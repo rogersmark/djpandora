@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Index{% endblock %}
 {% block extrahead %}
+<link href="{{ STATIC_URL }}djpandora.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript">
 
     function ajax_vote(song_id, value){
@@ -37,6 +38,7 @@
                 $('#song-information').hide();
             }
             else {
+                document.title = data['title'] + ' by ' + data['artist'] + ' - DjPandora';
                 $('#song-loading').hide();
                 $('#song-information').show();
                 $('#song-name').text('Song: ' + data['title']);
@@ -116,24 +118,30 @@
 </script>
 {% endblock %}
 {% block content %}
-	<h1>Welcome to DjPandora</h1>
-
-    <div id="accordion">
-        <h3><a href="#">Song Information</a></h3>
+    <div id="main-content">
+        <div id="accordion">
+            <h3><a href="#">DjPandora</a></h3>
             <div>
-                <p id="song-loading">Loading...</p>
-                <ul id="song-information">
-                    <li id='station'></li>
-                    <li id='song-name'></li>
-                    <li id='artist-name'></li>
-                    <li id='vote-total'></li>
-                    <li id='voting'></li>
-                    <li id='time-left'></li>
-                </ul>
+                <p>
+                Welcome to DjPandora. Please see the sections below to vote on songs or stations, as well as see upcoming songs.
+                </p>
             </div>
-        <h3><a href="#">Upcoming Songs</a></h3>
-            <div id='playlist'></div>
-        <h3><a href="#" id="station-link-item">Stations</a></h3>
-            <div id='stations'></div>
+            <h3><a href="#">Song Information</a></h3>
+                <div>
+                    <p id="song-loading">Loading...</p>
+                    <ul id="song-information">
+                        <li id='station'></li>
+                        <li id='song-name'></li>
+                        <li id='artist-name'></li>
+                        <li id='vote-total'></li>
+                        <li id='voting'></li>
+                        <li id='time-left'></li>
+                    </ul>
+                </div>
+            <h3><a href="#">Upcoming Songs</a></h3>
+                <div id='playlist'></div>
+            <h3><a href="#" id="station-link-item">Stations</a></h3>
+                <div id='stations'></div>
+        </div>
     </div>
 {% endblock %}

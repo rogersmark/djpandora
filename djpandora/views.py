@@ -157,7 +157,6 @@ def djpandora_status(request):
             poll.active = False
             station_vote = True
             poll.save()
-            ## TODO: If proper value, we switch stations
         else:
             station_vote = True
 
@@ -190,12 +189,11 @@ def djpandora_stations(request):
             vote_total = 0
             for vote in poll.stationvote_set.all():
                 vote_total += vote.value
-            html += '<li style="color: red;">\
-                <a style="color: red;" href="#" onclick="javascript: return \
-                station_poll(%s);">%s</a>  <a href="#" id="station-up" \
-                onclick="javascript: return station_vote(%s, 1);">+</a>  \
+            html += '<li><a href="#" onclick="javascript: return \
+                station_poll(%s);"><span class="warning">%s</span></a>  <a href="#" id="station-up" \
+                onclick="javascript: return station_vote(%s, 1);"><span class="warning">+</span></a>  \
                 <a href="#" id="station-down" \
-                onclick="javascript: return station_vote(%s, -1);">-</a>  \
+                onclick="javascript: return station_vote(%s, -1);"><span class="warning">-</span></a>  \
                 (<span style="color: black;" \
                 id="station-vote-total">%s</span>)</li>' % (
                 x.id, x.name, x.id, x.id, vote_total
