@@ -34,6 +34,15 @@ class Song(models.Model):
     def __unicode__(self):
         return u'%s - %s' % (self.title, self.station)
 
+    def _get_votes(self):
+        votes = self.vote_set.all()
+        vote_total = 0
+        for vote in votes:
+            vote_total += vote.value
+        return vote_total
+
+    vote_total = property(_get_votes)
+
 class Vote(models.Model):
     """
     A user's voting result. Votes are tallied for specific songs on 

@@ -89,6 +89,12 @@ def djpandora_status(request):
             station=station
         )
         song_info['time'] = int(float(song_info['progress']) / float(song_info['length']) * 100.0)
+        remaining_time = song_info['length'] - song_info['progress']
+        if remaining_time < 30:
+            if song.vote_total > 0:
+                s.like_song()
+            elif song.vote_total < 0:
+                s.dislike_song()
     except Exception, e:
         ## Likely a refusal of connection
         print e
@@ -180,6 +186,11 @@ def djpandora_status(request):
 
 @login_required
 def djpandora_stations(request):
+    """
+    Gets all the stations for the currently in use Pandora account, and displays
+    them. If a vote is in progress, the station being voted on will be shown 
+    as such.
+    """
     json_data = {}
     stations = models.Station.objects.filter(account=settings.PANDORA_USER)
     html = '<ul>'
@@ -209,6 +220,10 @@ def djpandora_stations(request):
 
 @login_required
 def start_station_vote(request):
+    """
+    Starts a station voting poll. If one is already in progress, we fail out.
+    Only one poll can be going on at a time.
+    """
     json_data = {
         'status': 'success'
     }
@@ -224,15 +239,16 @@ def start_station_vote(request):
 
 @login_required
 def station_vote(request):
+    """
+    Capture a vote from a user, and apply it. Only allows a user to vote
+    exactly one time in a poll.
+    """
     json_data = {'status': 'success'}
     station = get_object_or_404(models.Station, id=request.GET.get('station_id'))
     value = int(request.GET.get('value'))
     station_poll = models.StationPoll.objects.get(active=True)
-    print station_poll.station
-    print station
     if station_poll.station.id is not station.id:
         json_data['status'] = 'failed'
-        print "failed"
         return HttpResponse(json.dumps(json_data), mimetype='application/json')
 
     vote, created = models.StationVote.objects.get_or_create(poll=station_poll,
@@ -240,5 +256,4 @@ def station_vote(request):
     )
     vote.value = value
     vote.save()
-    print vote
     return HttpResponse(json.dumps(json_data), mimetype='application/json')
