@@ -100,6 +100,7 @@ def djpandora_status(request):
         print e
         time_left = 0
         station_name = 'null'
+        station = None
         playlist = []
         song = None
         song_info = {
@@ -162,6 +163,11 @@ def djpandora_status(request):
             s.play_station(poll.station.pandora_id)
             poll.active = False
             station_vote = True
+            if station:
+                station.current = False
+                station.save()
+            poll.station.current = True
+            poll.station.save()
             poll.save()
         else:
             station_vote = True
