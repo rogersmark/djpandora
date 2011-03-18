@@ -51,6 +51,7 @@ def djpandora_vote(request):
         station=song.station, song=song
     )
     vote_obj.value = vote
+    vote_obj.save()
     form = forms.Vote(post, instance=instance)
     json_status = {'status': 'success'}
     return HttpResponse(json.dumps(json_status), 
