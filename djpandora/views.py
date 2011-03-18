@@ -47,22 +47,12 @@ def djpandora_vote(request):
         u'station': song.station_id, u'value': vote, 
         u'song': song.id
     }
+    vote_obj, created = models.Vote.objects.get_or_create(user=request.user,
+        station=song.station, song=song
+    )
+    vote_obj.value = vote
     form = forms.Vote(post, instance=instance)
     json_status = {'status': 'success'}
-    if form.is_valid():
-        try:
-            form.save()
-        except Exception, e:
-            ## Unique Error
-            vote_obj = models.Vote.objects.get(user=request.user,
-                song=song, station=song.station
-            )
-            if int(vote) == int(vote_obj.value):
-                json_status['status'] = 'failed'
-            else:
-                vote_obj.value = vote
-                vote_obj.save()
-
     return HttpResponse(json.dumps(json_status), 
                 mimetype='application/json'
     )

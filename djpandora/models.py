@@ -55,7 +55,7 @@ class Vote(models.Model):
     user = models.ForeignKey(User)
     song = models.ForeignKey(Song)
     station = models.ForeignKey(Station)
-    value = models.IntegerField()
+    value = models.IntegerField(default=0)
 
     def __unicode__(self):
         return u'%s vote on %s in %s' % (self.user, self.song, self.station)
