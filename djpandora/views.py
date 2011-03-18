@@ -150,7 +150,7 @@ def djpandora_status(request):
             else:
                 station_upboat_avail = True
                 station_downboat_avail = False
-        if diff.seconds > 30000:
+        if diff.seconds > 300:
             s = utils.get_pandora_rpc_conn()
             s.play_station(poll.station.pandora_id)
             poll.active = False
