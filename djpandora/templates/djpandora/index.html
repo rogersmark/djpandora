@@ -74,6 +74,7 @@
         url = '{% url djpandora_stations %}';
         console.log('called');
         $.getJSON(url, function(data){
+            $('#stations').html('<ul id="station-list"></ul>');
             $.each(data.items, function(i, item){
                 if (data.poll){
                     if (item.fields['polling']){
