@@ -43,11 +43,11 @@ class PandoraTests(TestCase):
         vote = models.Vote.objects.get(id=1)
         self.assertEquals(vote.value, -1)
 
-        ## Post again, get a unique error
+        ## Post again, handle a unique error
         response = self.client.get('%s?song_id=1&vote=like' % url)
         self.assertEquals(response.status_code, 200)
         data = json.loads(response.content)
-        self.assertEquals(data.get('status'), 'failed')
+        self.assertEquals(data.get('status'), 'success')
 
     def test_pandora_status(self):
         self.client.login(username='tester', password='tester')

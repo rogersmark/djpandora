@@ -64,7 +64,7 @@
                 if(data['station_down']){
                     $('#station-down').show();
                 } else {
-                    console.log('hide the downboats!');
+                    $('#station-down').hide()
                 }
             }
         });
@@ -73,16 +73,28 @@
     function station_check(){
         url = '{% url djpandora_stations %}';
         $.getJSON(url, function(data){
-            $('#stations').html(data['html']); 
+            $.each(data.items, function(i, item){
+                if (data.poll){
+                    if (item.fields['polling']){
+                        station_html = '<li id="station-number-' + item.pk + '"><span class="warning">' + item.fields['name'] + '</span>  <a href="#" id="station-up" onclick="javascript: return station_vote(' + item.pk + ', 1);"><span class="warning">+</span></a> <a href="#" id="station-down" onclick="javascript: return station_vote(' + item.pk + ', -1);"><span class="warning">-</span></a>  (<span style="color: black;" id="station-vote-total">' + item['fields']['vote_total'] + '</span>)</li>';
+                    } else {
+                        station_html = '<li id="station-number-' + item.pk + '">' + item.fields['name'] + '</li>';
+                    }
+                } else {
+                    station_html = '<li id="station-number-' + item.pk + '"><a href="#" onclick="javascript:return station_poll(' + item.pk + ');">' + item.fields['name'] + '</a></li>';
+                }
+                $('#station-list').append(station_html);
+            });
         });
 
     }
 
     function station_poll(station_id){
-        console.log('here');
         url = '{% url start_station_vote %}?station_id=' + station_id;
         $.getJSON(url, function(data){
-           //In here if we catch a failure, let user know
+           $('#station-link-item').text('Stations (VOTE IN PROGRESS)');
+           station_html = '<li id="station-number-' + data.pk + '"><span class="warning">' + data.name + '</span>  <a href="#" id="station-up" onclick="javascript: return station_vote(' + data.pk + ', 1);"><span class="warning">+</span></a> <a href="#" id="station-down" onclick="javascript: return station_vote(' + data.pk + ', -1);"><span class="warning">-</span></a>  (<span style="color: black;" id="station-vote-total">' + data.vote_total + '</span>)</li>';
+           $('#station-number-' + data.pk).html(station_html);
         });
     }
 
@@ -141,7 +153,7 @@
             <h3><a href="#">Upcoming Songs</a></h3>
                 <div id='playlist'></div>
             <h3><a href="#" id="station-link-item">Stations</a></h3>
-                <div id='stations' class="tall-pane"></div>
+                <div id='stations' class="tall-pane"><ul id="station-list"></ul></div>
         </div>
     </div>
 {% endblock %}

@@ -17,6 +17,14 @@ class Station(models.Model):
     def __unicode__(self):
         return u'%s' % self.name
 
+    def _get_polling(self):
+        if self.stationpoll_set.filter(active=True):
+            return True
+        else:
+            return False
+
+    polling = property(_get_polling)
+
 class Song(models.Model):
     """
     A Pandora song tied to a Station, automatically created from calls to our Pandora service
@@ -69,6 +77,15 @@ class StationPoll(models.Model):
 
     def __unicode__(self):
         return u'Poll: %s, Active=%s' % (self.station, self.active)
+
+    def _get_votes(self):
+        votes = self.stationvote_set.all()
+        vote_total = 0
+        for vote in votes:
+            vote_total += vote.value
+        return vote_total
+
+    vote_total = property(_get_votes)
 
 class StationVote(models.Model):
 

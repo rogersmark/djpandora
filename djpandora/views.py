@@ -10,6 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.mail import send_mail
+from django.core import serializers
 
 import models, forms, utils
 
@@ -149,7 +150,7 @@ def djpandora_status(request):
             else:
                 station_upboat_avail = True
                 station_downboat_avail = False
-        if diff.seconds > 300:
+        if diff.seconds > 30000:
             s = utils.get_pandora_rpc_conn()
             s.play_station(poll.station.pandora_id)
             poll.active = False
@@ -188,32 +189,21 @@ def djpandora_stations(request):
     them. If a vote is in progress, the station being voted on will be shown 
     as such.
     """
-    json_data = {}
+    json_serializer = serializers.get_serializer("json")()
     stations = models.Station.objects.filter(account=settings.PANDORA_USER)
-    html = '<ul>'
-    for x in stations:
-        if x.stationpoll_set.filter(active=True):
-            poll = x.stationpoll_set.filter(active=True)[0]
-            vote_total = 0
-            for vote in poll.stationvote_set.all():
-                vote_total += vote.value
-            html += '<li><a href="#" onclick="javascript: return \
-                station_poll(%s);"><span class="warning">%s</span></a>  <a href="#" id="station-up" \
-                onclick="javascript: return station_vote(%s, 1);"><span class="warning">+</span></a>  \
-                <a href="#" id="station-down" \
-                onclick="javascript: return station_vote(%s, -1);"><span class="warning">-</span></a>  \
-                (<span style="color: black;" \
-                id="station-vote-total">%s</span>)</li>' % (
-                x.id, x.name, x.id, x.id, vote_total
-            )
-        else:
-            html += '<li><a href="#" onclick="javascript: return station_poll(%s);">%s</a></li>' % (
-                x.id, x.name
-            )
-    html += '</ul>'
-    json_data['html'] = html
-    json_data['status'] = 'success'
-    return HttpResponse(json.dumps(json_data), mimetype='application/json')
+    station_data = json_serializer.serialize(stations, ensure_ascii=False)
+    station_data = json.loads(station_data)
+    polling = False
+    for x in station_data:
+        station = models.Station.objects.get(id=x['pk'])
+        x['fields']['polling'] = station.polling
+        if station.polling:
+            polling = True
+            poll = models.StationPoll.objects.get(active=True)
+            x['fields']['vote_total'] = poll.vote_total
+
+    json_data = {'status': 'success', 'poll': polling, 'items': station_data}
+    return HttpResponse(json.dumps(json_data), mimetype="application/json")
 
 @login_required
 def start_station_vote(request):
@@ -231,7 +221,10 @@ def start_station_vote(request):
     else:
         poll = models.StationPoll(station=station, active=True)
         poll.save()
-
+        json_data['vote_total'] = poll.vote_total
+    
+    json_data['pk'] = station.id
+    json_data['name'] = station.name
     return HttpResponse(json.dumps(json_data), mimetype='application/json')
 
 @login_required
