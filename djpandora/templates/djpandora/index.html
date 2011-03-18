@@ -72,6 +72,7 @@
 
     function station_check(){
         url = '{% url djpandora_stations %}';
+        console.log('called');
         $.getJSON(url, function(data){
             $.each(data.items, function(i, item){
                 if (data.poll){
@@ -93,9 +94,9 @@
         url = '{% url start_station_vote %}?station_id=' + station_id;
         $.getJSON(url, function(data){
            $('#station-link-item').text('Stations (VOTE IN PROGRESS)');
-           station_html = '<li id="station-number-' + data.pk + '"><span class="warning">' + data.name + '</span>  <a href="#" id="station-up" onclick="javascript: return station_vote(' + data.pk + ', 1);"><span class="warning">+</span></a> <a href="#" id="station-down" onclick="javascript: return station_vote(' + data.pk + ', -1);"><span class="warning">-</span></a>  (<span style="color: black;" id="station-vote-total">' + data.vote_total + '</span>)</li>';
-           $('#station-number-' + data.pk).html(station_html);
         });
+        $('#stations').html('<ul id="station-list"></ul>');
+        station_check();
     }
 
     function station_vote(station_id, value){
