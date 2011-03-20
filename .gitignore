@@ -1,3 +1,4 @@
 *.pyc
 djpandora.egg-info
 build
+html_docs
