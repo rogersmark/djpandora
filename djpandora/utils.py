@@ -1,3 +1,4 @@
+import datetime
 import xmlrpclib
 
 from django.conf import settings
@@ -30,7 +31,7 @@ def get_song():
         'station_name': None,
         'time_left': 0,
         'playlist': [],
-        'song': None
+        'song': None,
     }
     try:
         s = get_pandora_rpc_conn()
@@ -46,7 +47,13 @@ def get_song():
             station=station
         )
         result['song'] = song
-        song_info['time'] = int(float(song_info['progress']) / float(song_info['length']) * 100.0)
+        if song_info['progress'] is 0:
+            song_info['time'] = 0
+        else:
+            song_info['time'] = int(float(song_info['progress']) / float(song_info['length']) * 100.0)
+
+        if song_info['length'] is 0:
+            song_info['length'] = 100
         remaining_time = song_info['length'] - song_info['progress']
         if remaining_time < 30:
             if song.vote_total > 0:
@@ -65,7 +72,9 @@ def song_voting(user, song=None):
     upboat_avail = True
     downboat_avail = True
     vote_total = 0
+    song_id = None
     if song:
+        song_id = song.id
         for vote in song.vote_set.all():
             vote_total += vote.value
         user_vote = song.vote_set.filter(user=user)
@@ -75,20 +84,14 @@ def song_voting(user, song=None):
                 upboat_avail = False
             elif user_vote.value == -1:
                 downboat_avail = False
-        if upboat_avail and downboat_avail:
-            vote_html = """<a href="#" onclick="javascript:return ajax_vote(%s, 'like');">Like</a> - <a href="#" onclick="javascript:return ajax_vote(%s, 'dislike');">Dislike</a>""" % (song.id, song.id)
-        elif upboat_avail and not downboat_avail:
-            vote_html = """<a href="#" onclick="javascript:return ajax_vote(%s, 'like');">Like</a>""" % (song.id)
-        else:
-            vote_html = """<a href="#" onclick="javascript:return ajax_vote(%s, 'dislike');">Dislike</a>""" % (song.id)
-    else:
-        vote_html = ''
-    return {'vote_html': vote_html, 'vote_total': vote_total,
-        'upboat_avail': upboat_avail, 'downboat_avail': downboat_avail
+    return {'vote_total': vote_total,
+        'upboat_avail': upboat_avail, 'downboat_avail': downboat_avail,
+        'song_id': song_id
     }
 
 def station_election(user):
     station_polls = models.StationPoll.objects.filter(active=True)
+    station = models.Station.objects.get(current=True)
     station_vote = False
     station_upboat_avail = True
     station_downboat_avail = True
@@ -107,7 +110,7 @@ def station_election(user):
                 station_upboat_avail = True
                 station_downboat_avail = False
         if diff.seconds > 300:
-            s = utils.get_pandora_rpc_conn()
+            s = get_pandora_rpc_conn()
             s.play_station(poll.station.pandora_id)
             poll.active = False
             station_vote = True

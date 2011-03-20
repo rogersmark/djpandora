@@ -79,17 +79,14 @@ def djpandora_status(request):
         'title': song_result['song_info']['title'],
         'station': song_result['station_name'],
         'artist': song_result['song_info']['artist'],
-        'votes': vote_result['vote_total'],
-        'vote-html': vote_result['vote_html'],
         'time': song_result['song_info']['time'],
-        'album': song_result['song_info']['album'],
-        'upcoming': playlist_html,
-        'status': 'success',
+        'album': song_result['song_info']['album'],        
         'progress': song_result['song_info']['progress'],
         'length': song_result['song_info']['length'],
-        'station_vote': poll_results['station_vote'],
-        'station_up': poll_results['station_upboat_avail'],
-        'station_down': poll_results['station_downboat_avail']
+        'voting': vote_result,
+        'station_voting': poll_results,
+        'upcoming': playlist_html,
+        'status': 'success',
     }
     return HttpResponse(json.dumps(json_data), mimetype='application/json')
 

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Index{% endblock %}
+{% block title %}Loading...{% endblock %}
 {% block extrahead %}
 <link href="{{ STATIC_URL }}djpandora.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript">
@@ -26,8 +26,45 @@
 
     function update_progress(){
         progress += 1;
-        value = progress / length * 100;
+        if (progress > 0){
+            value = progress / length * 100;
+        }
+        else{
+            value = 0
+        }
         $('#time-left').progressbar("option", "value", value);
+    }
+
+    function update_voting_display(data){
+        vote_html = ''
+        if(data['upboat_avail'] && data['downboat_avail']){
+            vote_html = '<a href="#" onclick="javascript:return ajax_vote(' + data['song_id'] + ', \'like\');">Like</a> - <a href="#" onclick="javascript:return ajax_vote(' + data['song_id'] + ', \'dislike\');">Disike</a>"';
+        } else if (data['upboat_avail'] && !data['downboat_avail']){
+            vote_html = '<a href="#" onclick="javascript:return ajax_vote(' + data['song_id'] + ', \'like\');">Like</a>';
+        } else {
+            vote_html = '<a href="#" onclick="javascript:return ajax_vote(' + data['song_id'] + ', \'dislike\');">Dislike</a>';
+        }
+        $('#voting').html(vote_html);
+        $('#vote-total').html('Votes: <span id="vote-count">' + data['vote_total'] + '</span>');
+    }
+
+    function update_station_polling_display(data){
+        if(data['station_vote']){
+            $('#station-link-item').text('Stations (VOTE IN PROGRESS)');
+        }else{
+            $('#station-link-item').text('Stations');
+        }
+        if(data['station_up']){
+            $('#station-up').show();
+        } else {
+            $('#station-up').hide();
+        }
+
+        if(data['station_down']){
+            $('#station-down').show();
+        } else {
+            $('#station-down').hide()
+        }
     }
 
     function update_playing(){
@@ -38,41 +75,31 @@
                 $('#song-information').hide();
             }
             else {
+
+                // Update a large portion of the page
                 document.title = data['title'] + ' by ' + data['artist'] + ' - DjPandora';
                 $('#song-loading').hide();
                 $('#song-information').show();
                 $('#song-name').text('Song: ' + data['title']);
                 $('#artist-name').text('Artist: ' + data['artist']);
-                $('#vote-total').html('Votes: <span id="vote-count">' + data['votes'] + '</span>');
                 $('#station').text('Station: ' + data['station']);
                 $('#playlist').html(data['upcoming']);
-                $('#voting').html(data['vote-html']);
                 $('#time-left').progressbar( "option", "value", data['time']);
+
+                // Update our voting displays
+                update_voting_display(data['voting']);
+                update_station_polling_display(data['station_voting']);
+
+                // Update our progress and length
                 progress = data['progress'];
                 length = data['length'];
-                if(data['station_vote']){
-                    $('#station-link-item').text('Stations (VOTE IN PROGRESS)');
-                }else{
-                    $('#station-link-item').text('Stations');
-                }
-                if(data['station_up']){
-                    $('#station-up').show();
-                } else {
-                    $('#station-up').hide();
-                }
-
-                if(data['station_down']){
-                    $('#station-down').show();
-                } else {
-                    $('#station-down').hide()
-                }
+                
             }
         });
     }
 
     function station_check(){
         url = '{% url djpandora_stations %}';
-        console.log('called');
         $.getJSON(url, function(data){
             $('#stations').html('<ul id="station-list"></ul>');
             $.each(data.items, function(i, item){
