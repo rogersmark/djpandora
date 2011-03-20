@@ -69,11 +69,6 @@ def djpandora_status(request):
     """
     song_result = utils.get_song()
     vote_result = utils.song_voting(request.user, song_result['song'])
-    playlist_html = '<ul>'
-    for x in song_result['playlist']:
-        playlist_html += '<li>%s by %s</li>' % (x['title'], x['artist'])
-
-    playlist_html += '</ul></li></ul>'
     poll_results = utils.station_election(request.user)
     json_data = {
         'title': song_result['song_info']['title'],
@@ -83,9 +78,9 @@ def djpandora_status(request):
         'album': song_result['song_info']['album'],        
         'progress': song_result['song_info']['progress'],
         'length': song_result['song_info']['length'],
+        'upcoming': song_result['playlist'],
         'voting': vote_result,
         'station_voting': poll_results,
-        'upcoming': playlist_html,
         'status': 'success',
     }
     return HttpResponse(json.dumps(json_data), mimetype='application/json')

@@ -67,6 +67,15 @@
         }
     }
 
+    function display_playlist(data){
+        playlist_html = '<ul>';
+        for (i=0; i<data.length; i++){
+            playlist_html += '<li>' + data[i]['title'] + ' by ' + data[i]['artist'] + '</li>';
+        }
+        playlist_html += '</ul>';
+        $('#playlist').html(playlist_html);
+    }
+
     function update_playing(){
         url = '{% url djpandora_status %}'
         $.getJSON(url, function(data){
@@ -83,12 +92,12 @@
                 $('#song-name').text('Song: ' + data['title']);
                 $('#artist-name').text('Artist: ' + data['artist']);
                 $('#station').text('Station: ' + data['station']);
-                $('#playlist').html(data['upcoming']);
                 $('#time-left').progressbar( "option", "value", data['time']);
 
-                // Update our voting displays
+                // Update various displays
                 update_voting_display(data['voting']);
                 update_station_polling_display(data['station_voting']);
+                display_playlist(data['upcoming']);
 
                 // Update our progress and length
                 progress = data['progress'];
