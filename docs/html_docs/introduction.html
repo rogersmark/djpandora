@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Introduction &mdash; DjPandora v0.1 documentation</title>
+    <title>&lt;no title&gt; &mdash; DjPandora v0.1 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -22,9 +22,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="DjPandora v0.1 documentation" href="index.html" />
-    <link rel="next" title="Features" href="features.html" />
-    <link rel="prev" title="Welcome to DjPandora’s documentation!" href="index.html" /> 
+    <link rel="top" title="DjPandora v0.1 documentation" href="index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -34,11 +32,8 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="features.html" title="Features"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="Welcome to DjPandora’s documentation!"
-             accesskey="P">previous</a> |</li>
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li><a href="index.html">DjPandora v0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -48,57 +43,13 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p>DjPandora is an application that interfaces with <tt class="docutils literal"><span class="pre">pypandora</span></tt>. The premise is to allow a group of people to control a single Pandora installation. The idea came about as a way for our office to control the office Pandora radio setup. This will allow users in the office to vote on songs, stations, and so on to control Pandora as an overall group.</p>
-</div>
-<div class="section" id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p>First you&#8217;ll need to install <a class="reference external" href="https://github.com/amoffat/pypandora">PyPandora</a>. That will handle all of our Pandora calls for us. We also assume that you have a working Django installation as well. Then you&#8217;ll install <tt class="docutils literal"><span class="pre">DjPandora</span></tt> one of a couple possible ways:</p>
-<div class="highlight-python"><pre>pip install -egit+git@github.com:f4nt/djpandora.git#egg=DjPandora</pre>
-</div>
-<p>Or you can clone the repository yourself and do the usual:</p>
-<div class="highlight-python"><pre>python setup.py install</pre>
-</div>
-<p>Whichever you prefer should get you taken care of. Afterwards, you&#8217;ll want to add <tt class="docutils literal"><span class="pre">djpandora</span></tt> to your INSTALLED_APPS Django setting. Finally, you&#8217;ll want to add 4 new settings to your settings.py configuration:</p>
-<blockquote>
-<div><ul class="simple">
-<li>PANDORA_USER - Your Pandora username</li>
-<li>PANDORA_PASS - Your Pandora password</li>
-<li>PANDORA_RPC_HOST - Host your XMLRPC server is running on, default should be &#8216;localhost&#8217;</li>
-<li>PANDORA_RPC_PORT - Default should be 8123.</li>
-</ul>
-</div></blockquote>
-<p>Now you&#8217;ll want to sync your database to build the <tt class="docutils literal"><span class="pre">DjPandora</span></tt> database tables. If you&#8217;re using South, you can use its migrate command instead. Then we&#8217;ll need to run a few quick commands. First of all, we need to start the XMLRPC server that talks to Pandora:</p>
-<div class="highlight-python"><pre>./manage.py start_rpc_server</pre>
-</div>
-<p>That starts up our RPC server, now we can communicate with Pandora. We&#8217;ll want to initialize our station list in Django now, and we have another management command to do just that:</p>
-<div class="highlight-python"><pre>./manage.py build_stations</pre>
-</div>
-<p>This command goes to Pandora, gets our list of stations, and creates records for each of them. You&#8217;ll want to go in via the Admin in Django, or to a SQL shell, and mark one of these station&#8217;s &#8220;current&#8221; attribute as True. This will seed our first station as the one that should be playing. In the future, that&#8217;ll be user controlled. Once you have a station marked as &#8220;current&#8221;, we can perform the final step:</p>
-<div class="highlight-python"><pre>./manage auth_rpc_server</pre>
-</div>
-<p>That will authenticate with Pandora, and start playing the music. Now your office is ready to control Pandora as a group!</p>
-</div>
-
+  
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Introduction</a></li>
-<li><a class="reference internal" href="#installation">Installation</a></li>
-</ul>
-
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Welcome to DjPandora&#8217;s documentation!</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="features.html"
-                        title="next chapter">Features</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/introduction.txt"
@@ -128,11 +79,8 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="features.html" title="Features"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="Welcome to DjPandora’s documentation!"
-             >previous</a> |</li>
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li><a href="index.html">DjPandora v0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
