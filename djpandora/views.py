@@ -67,118 +67,29 @@ def djpandora_status(request):
     Calls the Pandora service, forms a JSON object and returns it. This function
     should only be called via AJAX calls.
     """
-    try:
-        s = utils.get_pandora_rpc_conn()
-        station = models.Station.objects.get(current=True)
-        station_name = station.name
-        playlist = s.get_playlist(station.pandora_id)
-        song_info = s.current_song()
-        song, created = models.Song.objects.get_or_create(
-            title=song_info['title'],
-            album=song_info['album'],
-            pandora_id=song_info['id'],
-            artist=song_info['artist'],
-            station=station
-        )
-        song_info['time'] = int(float(song_info['progress']) / float(song_info['length']) * 100.0)
-        remaining_time = song_info['length'] - song_info['progress']
-        if remaining_time < 30:
-            if song.vote_total > 0:
-                s.like_song()
-            elif song.vote_total < 0:
-                s.dislike_song()
-    except Exception, e:
-        ## Likely a refusal of connection
-        print e
-        time_left = 0
-        station_name = 'null'
-        station = None
-        playlist = []
-        song = None
-        song_info = {
-            'album': 'null',
-            'artist': 'null',
-            'id': 'null',
-            'length': 50,
-            'progress': 0,
-            'title': 'null',
-            'time': 50,
-        }
-
+    song_result = utils.get_song()
+    vote_result = utils.song_voting(request.user, song_result['song'])
     playlist_html = '<ul>'
-    for x in playlist:
+    for x in song_result['playlist']:
         playlist_html += '<li>%s by %s</li>' % (x['title'], x['artist'])
 
     playlist_html += '</ul></li></ul>'
-    upboat_avail = True
-    downboat_avail = True
-    vote_total = 0
-    if song:
-        for vote in song.vote_set.all():
-            vote_total += vote.value
-        user_vote = song.vote_set.filter(user=request.user)
-        if user_vote:
-            user_vote = user_vote[0]
-            if user_vote.value == 1:
-                upboat_avail = False
-            elif user_vote.value == -1:
-                downboat_avail = False
-        if upboat_avail and downboat_avail:
-            vote_html = """<a href="#" onclick="javascript:return ajax_vote(%s, 'like');">Like</a> - <a href="#" onclick="javascript:return ajax_vote(%s, 'dislike');">Dislike</a>""" % (song.id, song.id)
-        elif upboat_avail and not downboat_avail:
-            vote_html = """<a href="#" onclick="javascript:return ajax_vote(%s, 'like');">Like</a>""" % (song.id)
-        else:
-            vote_html = """<a href="#" onclick="javascript:return ajax_vote(%s, 'dislike');">Dislike</a>""" % (song.id)
-    else:
-        vote_html = ''
-
-    station_polls = models.StationPoll.objects.filter(active=True)
-    station_vote = False
-    station_upboat_avail = True
-    station_downboat_avail = True
-    for poll in station_polls:
-        now = datetime.datetime.now()
-        diff = now - poll.time_started
-        station_votes = models.StationVote.objects.filter(poll=poll,
-            user=request.user
-        )
-        if station_votes:
-            user_vote = station_votes[0]
-            if user_vote.value == 1:
-                station_upboat_avail = False
-                station_downboat_avail = True
-            else:
-                station_upboat_avail = True
-                station_downboat_avail = False
-        if diff.seconds > 300:
-            s = utils.get_pandora_rpc_conn()
-            s.play_station(poll.station.pandora_id)
-            poll.active = False
-            station_vote = True
-            if station:
-                station.current = False
-                station.save()
-            poll.station.current = True
-            poll.station.save()
-            poll.save()
-        else:
-            station_vote = True
-
+    poll_results = utils.station_election(request.user)
     json_data = {
-        'title': song_info['title'],
-        'station': station_name,
-        'artist': song_info['artist'],
-        'votes': vote_total,
-        'vote-html': vote_html,
-        'time': song_info['time'],
-        'album': song_info['album'],
+        'title': song_result['song_info']['title'],
+        'station': song_result['station_name'],
+        'artist': song_result['song_info']['artist'],
+        'votes': vote_result['vote_total'],
+        'vote-html': vote_result['vote_html'],
+        'time': song_result['song_info']['time'],
+        'album': song_result['song_info']['album'],
         'upcoming': playlist_html,
         'status': 'success',
-        'progress': song_info['progress'],
-        'length': song_info['length'],
-        'station_vote': station_vote,
-        'station_up': station_upboat_avail,
-        'station_down': station_downboat_avail
+        'progress': song_result['song_info']['progress'],
+        'length': song_result['song_info']['length'],
+        'station_vote': poll_results['station_vote'],
+        'station_up': poll_results['station_upboat_avail'],
+        'station_down': poll_results['station_downboat_avail']
     }
     return HttpResponse(json.dumps(json_data), mimetype='application/json')
 
