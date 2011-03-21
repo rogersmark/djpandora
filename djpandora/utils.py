@@ -40,10 +40,10 @@ def get_song():
         result['playlist'] = s.get_playlist(station.pandora_id)
         song_info = s.current_song()
         song, created = models.Song.objects.get_or_create(
-            title=result['song_info']['title'],
-            album=result['song_info']['album'],
-            pandora_id=result['song_info']['id'],
-            artist=result['song_info']['artist'],
+            title=song_info['title'],
+            album=song_info['album'],
+            pandora_id=song_info['id'],
+            artist=song_info['artist'],
             station=station
         )
         result['song'] = song
