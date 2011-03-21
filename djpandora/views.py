@@ -150,3 +150,15 @@ def station_vote(request):
     vote.value = value
     vote.save()
     return HttpResponse(json.dumps(json_data), mimetype='application/json')
+
+@login_required
+def volume_control(request):
+    volume = request.GET.get('volume', 0)
+    s = utils.get_pandora_rpc_conn()
+    if volume == 0:
+        s.set_volume(0)
+    else:
+        level = float(volume) / 100.0
+        s.set_volume(level)
+    json_data = {'status': 'success'}
+    return HttpResponse(json.dumps(json_data), mimetype='application/json')

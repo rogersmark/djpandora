@@ -25,6 +25,9 @@
     }
 
     function update_progress(){
+        if (typeof progress == 'undefined'){
+            return;
+        }
         progress += 1;
         if (progress > 0){
             value = progress / length * 100;
@@ -38,7 +41,7 @@
     function update_voting_display(data){
         vote_html = ''
         if(data['upboat_avail'] && data['downboat_avail']){
-            vote_html = '<a href="#" onclick="javascript:return ajax_vote(' + data['song_id'] + ', \'like\');">Like</a> - <a href="#" onclick="javascript:return ajax_vote(' + data['song_id'] + ', \'dislike\');">Disike</a>"';
+            vote_html = '<a href="#" onclick="javascript:return ajax_vote(' + data['song_id'] + ', \'like\');">Like</a> - <a href="#" onclick="javascript:return ajax_vote(' + data['song_id'] + ', \'dislike\');">Disike</a>';
         } else if (data['upboat_avail'] && !data['downboat_avail']){
             vote_html = '<a href="#" onclick="javascript:return ajax_vote(' + data['song_id'] + ', \'like\');">Like</a>';
         } else {
@@ -152,6 +155,14 @@
         }
     }
 
+    function update_volume(event){
+        var volume_level = $( "#volume-slider" ).slider( "option", "value" );
+        url = '{% url volume_control %}?volume=' + volume_level;
+        $.getJSON(url, function(data){
+            // Might want to do something here some day
+        })
+    }
+
     $(document).ready(function(){
         var progress = 0;
         var length = 0;
@@ -160,6 +171,14 @@
         $('song-information').hide();
         update_playing();
         station_check();
+        $('#volume-slider').slider({
+            value: 50,
+            min: 0,
+            max: 100,
+            stop: function(event, ui){
+                update_volume(event);
+            }
+        });
         setInterval('update_playing()', 15000);
         setInterval('station_check()', 30000);
         setInterval('update_progress()', 1500);
@@ -192,6 +211,11 @@
                 <div id='playlist'></div>
             <h3><a href="#" id="station-link-item">Stations</a></h3>
                 <div id='stations' class="tall-pane"><ul id="station-list"></ul></div>
+            <h3><a href="#" id="djadmin">Admin</a></h3>
+                <div id='admin-zone' >
+                    <h4>Volume</h4>
+                    <div id="volume-slider"></div>
+                </div>
         </div>
     </div>
 {% endblock %}

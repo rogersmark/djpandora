@@ -19,6 +19,7 @@ class Command(NoArgsCommand):
         try:
             station = models.Station.objects.get(current=True)
             s.play_station(station.pandora_id)
+            s.set_volume(0.5)
         except ObjectDoesNotExist:
             stations = models.Station.objects.all().order_by('?')
             if not stations:
