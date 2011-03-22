@@ -62,8 +62,6 @@ def djpandora_vote(request):
 @login_required
 def djpandora_status(request):
     """
-    TODO: Actually call to our Pandora service
-
     Calls the Pandora service, forms a JSON object and returns it. This function
     should only be called via AJAX calls.
     """
@@ -78,6 +76,7 @@ def djpandora_status(request):
         'album': song_result['song_info']['album'],        
         'progress': song_result['song_info']['progress'],
         'length': song_result['song_info']['length'],
+        'volume': song_result['volume'],
         'upcoming': song_result['playlist'],
         'voting': vote_result,
         'station_voting': poll_results,

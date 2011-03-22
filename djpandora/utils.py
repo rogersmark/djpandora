@@ -28,6 +28,7 @@ def get_song():
             'title': 'null',
             'time': 50,
         },
+        'volume': 0,
         'station_name': None,
         'time_left': 0,
         'playlist': [],
@@ -62,6 +63,7 @@ def get_song():
                 s.dislike_song()
 
         result['song_info'] = song_info
+        result['volume'] = s.get_volume()
     except Exception, e:
         ## Likely a refusal of connection
         print e

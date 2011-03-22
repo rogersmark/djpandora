@@ -96,6 +96,8 @@
                 $('#artist-name').text('Artist: ' + data['artist']);
                 $('#station').text('Station: ' + data['station']);
                 $('#time-left').progressbar( "option", "value", data['time']);
+                console.log(data['volume']);
+                $('#volume-slider').slider('option', 'value', data['volume'] * 100);
 
                 // Update various displays
                 update_voting_display(data['voting']);
