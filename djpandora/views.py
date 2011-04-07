@@ -124,6 +124,7 @@ def start_station_vote(request):
     if station_polls:
         json_data['status'] = 'failed'
     else:
+        s = utils.get_pandora_rpc_conn()
         s.play_sound('station')
         poll = models.StationPoll(station=station, active=True)
         poll.save()
