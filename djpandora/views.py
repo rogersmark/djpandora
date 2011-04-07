@@ -39,10 +39,13 @@ def djpandora_vote(request):
     vote object. This prevents a user from repeatedly voting on a song.
     """
     song = get_object_or_404(models.Song, id=request.GET.get('song_id'))
+    s = utils.get_pandora_rpc_conn()
     if request.GET.get('vote') == 'like':
         vote = 1
+        s.play_sound('upvote')
     else:
         vote = -1
+        s.play_sound('downvote')
     instance = models.Vote(user=request.user)
     post = {
         u'station': song.station_id, u'value': vote, 
@@ -121,6 +124,7 @@ def start_station_vote(request):
     if station_polls:
         json_data['status'] = 'failed'
     else:
+        s.play_sound('station')
         poll = models.StationPoll(station=station, active=True)
         poll.save()
         json_data['vote_total'] = poll.vote_total
