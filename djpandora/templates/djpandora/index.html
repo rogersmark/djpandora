@@ -4,21 +4,22 @@
 <link href="{{ STATIC_URL }}djpandora.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript">
 
-    function ajax_vote(song_id, value){
+    function ajax_vote(song_id, value, section){
+        vote_section = $(section);
         url = '{% url djpandora_vote %}?song_id=' + song_id + '&vote=' + value
         $.getJSON(url, function(data){
             if(data['status'] == 'success'){
                 if(value == 'like'){
                     link = '<a href="#" onclick="javascript:return ajax_vote(' + song_id + ', \'dislike\');">Dislike</a>';
                     $('#voting').html(link);
-                    votes = parseInt($('#vote-count').text());
-                    $('#vote-count').text(votes + 1);
+                    votes = parseInt(vote_section.text());
+                    vote_section.text(votes + 1);
                 }
                 else{
                     link = '<a href="#" onclick="javascript:return ajax_vote(' + song_id + ', \'like\');">Like</a>';
                     $('#voting').html(link);
-                    votes = parseInt($('#vote-count').text());
-                    $('#vote-count').text(votes - 1);
+                    votes = parseInt(vote_section.text());
+                    vote_section.text(votes - 1);
                 }
             }
         });
@@ -41,11 +42,11 @@
     function update_voting_display(data){
         vote_html = ''
         if(data['upboat_avail'] && data['downboat_avail']){
-            vote_html = '<a href="#" onclick="javascript:return ajax_vote(' + data['song_id'] + ', \'like\');">Like</a> - <a href="#" onclick="javascript:return ajax_vote(' + data['song_id'] + ', \'dislike\');">Disike</a>';
+            vote_html = '<a href="#" onclick="javascript:return ajax_vote(' + data['song_id'] + ', \'like\', \'#vote-count\');">Like</a> - <a href="#" onclick="javascript:return ajax_vote(' + data['song_id'] + ', \'dislike\', \'#vote-count\');">Disike</a>';
         } else if (data['upboat_avail'] && !data['downboat_avail']){
-            vote_html = '<a href="#" onclick="javascript:return ajax_vote(' + data['song_id'] + ', \'like\');">Like</a>';
+            vote_html = '<a href="#" onclick="javascript:return ajax_vote(' + data['song_id'] + ', \'like\', \'#vote-count\');">Like</a>';
         } else {
-            vote_html = '<a href="#" onclick="javascript:return ajax_vote(' + data['song_id'] + ', \'dislike\');">Dislike</a>';
+            vote_html = '<a href="#" onclick="javascript:return ajax_vote(' + data['song_id'] + ', \'dislike\', \'#vote-count\');">Dislike</a>';
         }
         $('#voting').html(vote_html);
         $('#vote-total').html('Votes: <span id="vote-count">' + data['vote_total'] + '</span>');
@@ -79,6 +80,24 @@
         $('#playlist').html(playlist_html);
     }
 
+    function display_recents(data){
+        recent_html = '<ul>';
+        for (i=0; i<data.length; i++){
+            recent_html += '<li>';
+            recent_html += data[i]['title'] + ' by ' + data[i]['artist']; 
+            recent_html += ' (<span id="song-' + data[i]['song_id'] + '">' + data[i]['vote_total'] + '</span>)';
+            if(data[i]['upboat_avail'] && data[i]['downboat_avail']){
+                recent_html += '<a href="#" onclick="javascript:return ajax_vote(' + data[i]['song_id'] + ', \'like\', \'#song-' + data[i]['song_id'] + '\');">+</a> <a href="#" onclick="javascript:return ajax_vote(' + data[i]['song_id'] + ', \'dislike\', \'#song-' + data[i]['song_id'] + '\');">-</a>';
+            } else if (data[i]['upboat_avail'] && !data[i]['downboat_avail']){
+                recent_html += '<a href="#" onclick="javascript:return ajax_vote(' + data[i]['song_id'] + ', \'like\', \'#song-' + data[i]['song_id'] + '\');">+</a>';
+            } else {
+                recent_html += '<a href="#" onclick="javascript:return ajax_vote(' + data[i]['song_id'] + ', \'dislike\', \'#song-' + data[i]['song_id'] + '\');">-</a>';
+            }
+        }
+        recent_html += '</ul>';
+        $('#recent').html(recent_html);
+    }
+
     function update_playing(){
         url = '{% url djpandora_status %}'
         $.getJSON(url, function(data){
@@ -102,6 +121,7 @@
                 update_voting_display(data['voting']);
                 update_station_polling_display(data['station_voting']);
                 display_playlist(data['upcoming']);
+                display_recents(data['recents']);
 
                 // Update our progress and length
                 progress = data['progress'];
@@ -213,6 +233,8 @@
                 <div id='playlist'></div>
             <h3><a href="#" id="station-link-item">Stations</a></h3>
                 <div id='stations' class="tall-pane"><ul id="station-list"></ul></div>
+            <h3><a href="#" id="recently-played">Recently Played</a></h3>
+                <div id="recent" class="tall-pane"></div>
             <h3><a href="#" id="djadmin">Admin</a></h3>
                 <div id='admin-zone' >
                     <h4>Volume</h4>

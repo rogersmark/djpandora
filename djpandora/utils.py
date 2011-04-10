@@ -1,7 +1,9 @@
 import datetime
 import xmlrpclib
+import json
 
 from django.conf import settings
+from django.core import serializers
 
 import models
 
@@ -17,7 +19,7 @@ def get_pandora_rpc_conn():
     s = xmlrpclib.ServerProxy('http://%s:%s' % (host, port))
     return s
 
-def get_song():
+def get_song(user):
     result = {
         'song_info': {
             'album': 'null',
@@ -33,6 +35,7 @@ def get_song():
         'time_left': 0,
         'playlist': [],
         'song': None,
+        'recents': []
     }
     try:
         s = get_pandora_rpc_conn()
@@ -47,6 +50,17 @@ def get_song():
             artist=song_info['artist'],
             station=station
         )
+        song.played = datetime.datetime.now()
+        if not song.is_playing:
+            song.is_playing = True
+            old_song = models.Song.objects.filter(is_playing=True)
+            if old_song:
+                old_song = old_song[0]
+                old_song.is_playing = False
+                old_song.save()
+        
+        song.save()
+
         result['song'] = song
         if song_info['progress'] is 0:
             song_info['time'] = 0
@@ -64,6 +78,17 @@ def get_song():
 
         result['song_info'] = song_info
         result['volume'] = s.get_volume()
+
+        ## Get recents
+        recent_songs = station.song_set.all().order_by('-played')[1:6]
+        recents = []
+        for rs in recent_songs:
+            voting = song_voting(user, rs)
+            rs_dict = {'title': rs.title, 'artist': rs.artist}
+            rs_dict.update(voting)
+            recents.append(rs_dict)
+
+        result['recents'] = recents
     except Exception, e:
         ## Likely a refusal of connection
         print e

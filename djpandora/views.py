@@ -68,7 +68,7 @@ def djpandora_status(request):
     Calls the Pandora service, forms a JSON object and returns it. This function
     should only be called via AJAX calls.
     """
-    song_result = utils.get_song()
+    song_result = utils.get_song(request.user)
     vote_result = utils.song_voting(request.user, song_result['song'])
     poll_results = utils.station_election(request.user)
     json_data = {
@@ -81,6 +81,7 @@ def djpandora_status(request):
         'length': song_result['song_info']['length'],
         'volume': song_result['volume'],
         'upcoming': song_result['playlist'],
+        'recents': song_result['recents'],
         'voting': vote_result,
         'station_voting': poll_results,
         'status': 'success',

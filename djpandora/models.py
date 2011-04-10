@@ -38,6 +38,8 @@ class Song(models.Model):
     album = models.CharField(max_length=512)
     artist = models.CharField(max_length=256)
     pandora_id = models.CharField(max_length=128)
+    played = models.DateTimeField(blank=True, null=True)
+    is_playing = models.BooleanField(default=False)
 
     def __unicode__(self):
         return u'%s - %s' % (self.title, self.station)
