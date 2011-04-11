@@ -42,10 +42,10 @@ def djpandora_vote(request):
     s = utils.get_pandora_rpc_conn()
     if request.GET.get('vote') == 'like':
         vote = 1
-        #s.play_sound('upvote')
+        s.play_sound('upvote')
     else:
         vote = -1
-        #s.play_sound('downvote')
+        s.play_sound('downvote')
     instance = models.Vote(user=request.user)
     post = {
         u'station': song.station_id, u'value': vote, 
@@ -125,8 +125,8 @@ def start_station_vote(request):
     if station_polls:
         json_data['status'] = 'failed'
     else:
-        #s = utils.get_pandora_rpc_conn()
-        #s.play_sound('station')
+        s = utils.get_pandora_rpc_conn()
+        s.play_sound('station')
         poll = models.StationPoll(station=station, active=True)
         poll.save()
         json_data['vote_total'] = poll.vote_total
