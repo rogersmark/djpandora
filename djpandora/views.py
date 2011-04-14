@@ -174,5 +174,22 @@ def control_player(request):
     if not control_type:
         return HttpResponseNotFound()
 
+    s = utils.get_pandora_rpc_conn()
+    station = models.Station.objects.get(current=True)
     json_data = {'status': 'success', 'control_type': control_type}
+
+    if control_type == 'play':
+        if station.paused:
+            s.pause_song(False)
+        else:
+            s.play_station(station.pandora_id)
+    elif control_type == 'pause':
+        s.pause_song(True)
+        station.paused = True
+        station.save()
+    elif control_type == 'stop':
+        s.stop_song()
+    else:
+        json_data['status'] = 'failure'
+        json_data['error'] = 'Invalid control type'
     return HttpResponse(json.dumps(json_data), mimetype='application/json')
