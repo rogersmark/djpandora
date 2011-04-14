@@ -8,4 +8,5 @@ urlpatterns = patterns('djpandora.views',
     (r'^start_station_vote/$', 'start_station_vote', None, 'start_station_vote'),
     (r'^station_vote/$', 'station_vote', None, 'station_vote'),
     (r'^volume_control/$', 'volume_control', None, 'volume_control'),
+    (r'^control_player/$', 'control_player', None, 'control_player'),
 )

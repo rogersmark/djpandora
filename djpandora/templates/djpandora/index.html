@@ -185,6 +185,22 @@
         })
     }
 
+    function control_play(button){
+        if (button == 'play'){
+            $.getJSON('{% url control_player %}?control_type=play', function(data){
+                // might want to do something here some day
+            })
+        } else if (button == 'pause'){
+            $.getJSON('{% url control_player %}?control_type=pause', function(data){
+                // might want to do something here some day
+            })
+        } else if (button == 'stop'){
+            $.getJSON('{% url control_player %}?control_type=stop', function(data){
+                // might want to do something here some day
+            })
+        }
+    }
+
     $(document).ready(function(){
         var progress = 0;
         var length = 0;
@@ -241,9 +257,9 @@
                     <div id="volume-slider"></div>
                     <h4>Player Control</h4>
                     <div id="player-controls">
-                        <img src="{{ STATIC_URL }}/djpandora/control_play.png" />
-                        <img src="{{ STATIC_URL }}/djpandora/control_pause.png" />
-                        <img src="{{ STATIC_URL }}/djpandora/control_stop.png" />
+                        <a href="#" onclick="javascript: control_play('play');"><img src="{{ STATIC_URL }}/djpandora/control_play.png" /></a>
+                        <a href="#" onclick="javascript: control_play('pause');"><img src="{{ STATIC_URL }}/djpandora/control_pause.png" /></a>
+                        <a href="#" onclick="javascript: control_play('stop');"><img src="{{ STATIC_URL }}/djpandora/control_stop.png" /></a>
                     </div>
                 </div>
         </div>

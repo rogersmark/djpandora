@@ -167,3 +167,12 @@ def volume_control(request):
         s.set_volume(level)
     json_data = {'status': 'success'}
     return HttpResponse(json.dumps(json_data), mimetype='application/json')
+
+@login_required
+def control_player(request):
+    control_type = request.GET.get('control_type', False)
+    if not control_type:
+        return HttpResponseNotFound()
+
+    json_data = {'status': 'success', 'control_type': control_type}
+    return HttpResponse(json.dumps(json_data), mimetype='application/json')
