@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Loading...{% endblock %}
 {% block extrahead %}
-<link href="{{ STATIC_URL }}djpandora.css" rel="stylesheet" type="text/css"/>
+<link href="{{ STATIC_URL }}/djpandora/djpandora.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript">
 
     function ajax_vote(song_id, value, section){
@@ -239,6 +239,12 @@
                 <div id='admin-zone' >
                     <h4>Volume</h4>
                     <div id="volume-slider"></div>
+                    <h4>Player Control</h4>
+                    <div id="player-controls">
+                        <img src="{{ STATIC_URL }}/djpandora/control_play.png" />
+                        <img src="{{ STATIC_URL }}/djpandora/control_pause.png" />
+                        <img src="{{ STATIC_URL }}/djpandora/control_stop.png" />
+                    </div>
                 </div>
         </div>
     </div>
