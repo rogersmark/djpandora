@@ -75,6 +75,7 @@ def djpandora_status(request):
         'title': song_result['song_info']['title'],
         'station': song_result['station_name'],
         'artist': song_result['song_info']['artist'],
+        'album_art': song_result['song'].album_art,
         'time': song_result['song_info']['time'],
         'album': song_result['song_info']['album'],        
         'progress': song_result['song_info']['progress'],

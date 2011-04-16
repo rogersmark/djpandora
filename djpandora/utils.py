@@ -48,7 +48,8 @@ def get_song(user):
             album=song_info['album'],
             pandora_id=song_info['id'],
             artist=song_info['artist'],
-            station=station
+            station=station,
+            album_art=song_info['art']
         )
         song.played = datetime.datetime.now()
         if not song.is_playing:

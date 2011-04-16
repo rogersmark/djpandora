@@ -6,6 +6,15 @@
     list-style-type: none;
 }
 
+#album-art {
+    float: left;
+    padding-right: 20px;
+}
+#album-art img {
+    width: 150px;
+    height: 150px;
+}
+
 .warning {
     color: #EE0000;
 }
