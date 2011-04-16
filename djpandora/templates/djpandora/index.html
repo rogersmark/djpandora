@@ -98,6 +98,18 @@
         $('#recent').html(recent_html);
     }
 
+    function display_song_info(data){
+        document.title = data['title'] + ' by ' + data['artist'] + ' - DjPandora';
+        $('#song-loading').hide();
+        $('#song-information').show();
+        $('#song-name').text('Song: ' + data['title']);
+        $('#artist-name').text('Artist: ' + data['artist']);
+        $('#station').text('Station: ' + data['station']);
+        $('#time-left').progressbar( "option", "value", data['time']);
+        $('#volume-slider').slider('option', 'value', data['volume'] * 100);
+        $('#album-image').attr('src', data['album_art'])
+    }
+
     function update_playing(){
         url = '{% url djpandora_status %}'
         $.getJSON(url, function(data){
@@ -106,18 +118,8 @@
                 $('#song-information').hide();
             }
             else {
-
-                // Update a large portion of the page
-                document.title = data['title'] + ' by ' + data['artist'] + ' - DjPandora';
-                $('#song-loading').hide();
-                $('#song-information').show();
-                $('#song-name').text('Song: ' + data['title']);
-                $('#artist-name').text('Artist: ' + data['artist']);
-                $('#station').text('Station: ' + data['station']);
-                $('#time-left').progressbar( "option", "value", data['time']);
-                $('#volume-slider').slider('option', 'value', data['volume'] * 100);
-
                 // Update various displays
+                display_song_info(data);
                 update_voting_display(data['voting']);
                 update_station_polling_display(data['station_voting']);
                 display_playlist(data['upcoming']);
@@ -235,7 +237,7 @@
             </div>
             <h3><a href="#">Song Information</a></h3>
                 <div class="tall-pane">
-                    <div id="album-art"><img src="" /></div>
+                    <div id="album-art"><img id="album-image" src="" /></div>
                     <p id="song-loading">Loading...</p>
                     <ul id="song-information">
                         <li id='station'></li>

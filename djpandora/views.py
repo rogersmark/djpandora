@@ -69,6 +69,7 @@ def djpandora_status(request):
     should only be called via AJAX calls.
     """
     song_result = utils.get_song(request.user)
+    print song_result
     vote_result = utils.song_voting(request.user, song_result['song'])
     poll_results = utils.station_election(request.user)
     json_data = {

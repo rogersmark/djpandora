@@ -91,6 +91,7 @@ def get_song(user):
 
         result['recents'] = recents
     except Exception, e:
+        print e
         ## Likely a refusal of connection
         print e
     
