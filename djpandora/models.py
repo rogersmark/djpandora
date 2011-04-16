@@ -41,6 +41,7 @@ class Song(models.Model):
     pandora_id = models.CharField(max_length=128)
     played = models.DateTimeField(blank=True, null=True)
     is_playing = models.BooleanField(default=False)
+    liked = models.BooleanField(default=False)
 
     def __unicode__(self):
         return u'%s - %s' % (self.title, self.station)
