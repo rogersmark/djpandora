@@ -72,9 +72,12 @@ def get_song(user):
             song_info['length'] = 100
         remaining_time = song_info['length'] - song_info['progress']
         if remaining_time < 30:
-            if song.vote_total > 0:
+            ## If greater than 0, and not liked previously
+            if song.vote_total > 0 and not song.liked:
                 s.like_song()
-            elif song.vote_total < 0:
+
+            ## If less than 0 and not disliked previously
+            elif song.vote_total < 0 and song.liked:
                 s.dislike_song()
 
         result['song_info'] = song_info
@@ -91,7 +94,6 @@ def get_song(user):
 
         result['recents'] = recents
     except Exception, e:
-        print e
         ## Likely a refusal of connection
         print e
     

@@ -499,21 +499,21 @@
         }
     },
     {
-        "pk": 2, 
+        "pk": 4, 
         "model": "auth.user", 
         "fields": {
             "username": "tester", 
             "first_name": "", 
             "last_name": "", 
             "is_active": true, 
-            "is_superuser": false, 
-            "is_staff": false, 
-            "last_login": "2010-07-22 01:44:41", 
-            "groups": [1], 
+            "is_superuser": true, 
+            "is_staff": true, 
+            "last_login": "2011-04-16 18:41:29", 
+            "groups": [], 
             "user_permissions": [], 
-            "password": "sha1$7d204$6d4e1e4e46edfacb94870c39656167c1077b89b8", 
+            "password": "sha1$f9901$d182739ebaf8a53d387cdb205b362fbee582e201", 
             "email": "", 
-            "date_joined": "2010-07-22 01:44:41"
+            "date_joined": "2011-04-16 18:41:29"
         }
     },
     {
