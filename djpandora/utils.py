@@ -75,10 +75,14 @@ def get_song(user):
         if remaining_time < 30:
             ## If greater than 0, and not liked previously
             if song.vote_total > 0 and not song.liked:
+                song.liked = True
+                song.save()
                 s.like_song()
 
             ## If less than 0 and not disliked previously
             elif song.vote_total < 0 and song.liked:
+                song.liked = False
+                song.save()
                 s.dislike_song()
 
         result['song_info'] = song_info
