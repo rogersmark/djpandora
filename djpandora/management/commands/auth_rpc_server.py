@@ -18,6 +18,7 @@ class Command(NoArgsCommand):
         s.login(settings.PANDORA_USER, settings.PANDORA_PASS)
         try:
             station = models.Station.objects.get(current=True)
+            station.control(models.Station.PLAY)
             s.play_station(station.pandora_id)
             s.set_volume(0.5)
         except ObjectDoesNotExist:

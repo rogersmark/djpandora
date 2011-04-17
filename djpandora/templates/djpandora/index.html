@@ -107,7 +107,8 @@
         $('#station').text('Station: ' + data['station']);
         $('#time-left').progressbar( "option", "value", data['time']);
         $('#volume-slider').slider('option', 'value', data['volume'] * 100);
-        $('#album-image').attr('src', data['album_art'])
+        $('#album-image').attr('src', data['album_art']);
+        $('#station-status').text(data['station_status']);
     }
 
     function update_playing(){
@@ -241,6 +242,7 @@
                     <p id="song-loading">Loading...</p>
                     <ul id="song-information">
                         <li id='station'></li>
+                        <li>Status: <span id='station-status'></span></li>
                         <li id='song-name'></li>
                         <li id='artist-name'></li>
                         <li id='vote-total'></li>

@@ -9,11 +9,21 @@ class Station(models.Model):
     this out once the backend service in pypandora is further along.
     """
 
+    station_status = (
+        ('play', 'Playing'), ('stop', 'Stopped'), ('pause', 'Paused')
+    )
+
+    PLAY = 'play'
+    STOP = 'stop'
+    PAUSE = 'pause'
+
     name = models.CharField(max_length=256)
     pandora_id = models.CharField(max_length=256)
     current = models.BooleanField(default=False)
     account = models.CharField(max_length=256, blank=True, null=True)
-    paused = models.BooleanField(default=False)
+    status = models.CharField(max_length=64, choices=station_status,
+        default='stop'
+    )
 
     def __unicode__(self):
         return u'%s' % self.name
@@ -23,6 +33,10 @@ class Station(models.Model):
             return True
         else:
             return False
+
+    def control(self, status):
+        self.status = status
+        self.save()
 
     polling = property(_get_polling)
 

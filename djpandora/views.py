@@ -74,6 +74,7 @@ def djpandora_status(request):
     json_data = {
         'title': song_result['song_info']['title'],
         'station': song_result['station_name'],
+        'station_status': song_result['status'],
         'artist': song_result['song_info']['artist'],
         'album_art': song_result['song'].album_art,
         'time': song_result['song_info']['time'],
@@ -180,16 +181,20 @@ def control_player(request):
     json_data = {'status': 'success', 'control_type': control_type}
 
     if control_type == 'play':
-        if station.paused:
+        if station.status != models.Station.PLAY:
             s.pause_song(False)
+            station.control(models.Station.PLAY)
         else:
             s.play_station(station.pandora_id)
     elif control_type == 'pause':
-        s.pause_song(True)
-        station.paused = True
-        station.save()
+        if station.status != models.Station.PAUSE:
+            s.pause_song(True)
+            station.control(models.Station.PAUSE)
+            station.save()
     elif control_type == 'stop':
-        s.stop_song()
+        if station.status != models.Station.STOP:
+            s.stop_song()
+            station.control(models.Station.STOP)
     else:
         json_data['status'] = 'failure'
         json_data['error'] = 'Invalid control type'

@@ -30,6 +30,7 @@ def get_song(user):
             'title': 'null',
             'time': 50,
         },
+        'status': 'Stopped',
         'volume': 0,
         'station_name': None,
         'time_left': 0,
@@ -82,6 +83,7 @@ def get_song(user):
 
         result['song_info'] = song_info
         result['volume'] = s.get_volume()
+        result['status'] = station.get_status_display()
 
         ## Get recents
         recent_songs = station.song_set.all().order_by('-played')[1:6]
