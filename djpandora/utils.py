@@ -29,6 +29,7 @@ def get_song(user):
             'progress': 0,
             'title': 'null',
             'time': 50,
+            'album_art': None,
         },
         'status': 'Stopped',
         'volume': 0,
@@ -72,6 +73,8 @@ def get_song(user):
         if song_info['length'] is 0:
             song_info['length'] = 100
         remaining_time = song_info['length'] - song_info['progress']
+        song_info['album_art'] = song.album_art
+
         if remaining_time < 30:
             ## If greater than 0, and not liked previously
             if song.vote_total > 0 and not song.liked:
