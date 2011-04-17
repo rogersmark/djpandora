@@ -71,6 +71,21 @@
         }
     }
 
+    function display_recent_votes(data){
+        recent_vote_html = '<ul>';
+        for (i=0;i < data.length; i++){
+            if (data[i].value == 1){
+                vote_value = 'liked';
+            } else {
+                vote_value = 'disliked';
+            }
+            vote_str = data[i].user + ' ' + vote_value + ' ' + data[i].song;
+            recent_vote_html += '<li>' + vote_str + '</li>';
+        }
+        recent_vote_html += '</ul>';
+        $('#recent-votes').html(recent_vote_html);
+    }
+
     function display_playlist(data){
         playlist_html = '<ul>';
         for (i=0; i<data.length; i++){
@@ -122,6 +137,7 @@
                 // Update various displays
                 display_song_info(data);
                 update_voting_display(data['voting']);
+                display_recent_votes(data['voting']['recents']);
                 update_station_polling_display(data['station_voting']);
                 display_playlist(data['upcoming']);
                 display_recents(data['recents']);
@@ -267,6 +283,8 @@
                         <a href="#" onclick="javascript: control_play('stop');"><img src="{{ STATIC_URL }}/djpandora/control_stop.png" /></a>
                     </div>
                 </div>
+            <h3><a href="#" id="public-vote-header">Recent Votes</a></h3>
+                <div id="recent-votes"></div>
         </div>
     </div>
 {% endblock %}

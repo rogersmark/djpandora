@@ -83,6 +83,8 @@ class Vote(models.Model):
     song = models.ForeignKey(Song)
     station = models.ForeignKey(Station)
     value = models.IntegerField(default=0)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
         return u'%s vote on %s in %s' % (self.user, self.song, self.station)

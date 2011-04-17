@@ -124,9 +124,17 @@ def song_voting(user, song=None):
                 upboat_avail = False
             elif user_vote.value == -1:
                 downboat_avail = False
+
+    ## Grab 10 most recent votes
+    votes = models.Vote.objects.all().order_by('-modified')[:10]
+    recent_votes = []
+    for vote in votes:
+        rv = {'user': vote.user.username, 'song': vote.song.title, 
+            'value': vote.value}
+        recent_votes.append(rv)
     return {'vote_total': vote_total,
         'upboat_avail': upboat_avail, 'downboat_avail': downboat_avail,
-        'song_id': song_id
+        'song_id': song_id, 'recents': recent_votes
     }
 
 def station_election(user):
