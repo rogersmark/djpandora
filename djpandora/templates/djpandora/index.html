@@ -58,13 +58,12 @@
         }else{
             $('#station-link-item').text('Stations');
         }
-        if(data['station_up']){
+        if(data['station_upboat_avail']){
             $('#station-up').show();
         } else {
             $('#station-up').hide();
         }
-
-        if(data['station_down']){
+        if(data['station_downboat_avail']){
             $('#station-down').show();
         } else {
             $('#station-down').hide()
@@ -165,6 +164,7 @@
                     station_html = '<li id="station-number-' + item.pk + '"><a href="#" onclick="javascript:return station_poll(' + item.pk + ');">' + item.fields['name'] + '</a></li>';
                 }
                 $('#station-list').append(station_html);
+                update_station_polling_display(data.poll_results);
             });
         });
 

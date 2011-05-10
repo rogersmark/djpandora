@@ -170,7 +170,6 @@ def station_election(user):
             poll.save()
         else:
             station_vote = True
-    
     return {
         'station_vote': station_vote, 
         'station_upboat_avail': station_upboat_avail,

@@ -101,6 +101,7 @@ def djpandora_stations(request):
     stations = models.Station.objects.filter(account=settings.PANDORA_USER)
     station_data = json_serializer.serialize(stations, ensure_ascii=False)
     station_data = json.loads(station_data)
+    poll_results = utils.station_election(request.user)
     polling = False
     for x in station_data:
         station = models.Station.objects.get(id=x['pk'])
@@ -110,7 +111,8 @@ def djpandora_stations(request):
             poll = models.StationPoll.objects.get(active=True)
             x['fields']['vote_total'] = poll.vote_total
 
-    json_data = {'status': 'success', 'poll': polling, 'items': station_data}
+    json_data = {'status': 'success', 'poll': polling, 'items': station_data,
+        'poll_results': poll_results}
     return HttpResponse(json.dumps(json_data), mimetype="application/json")
 
 @login_required
