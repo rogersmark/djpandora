@@ -33,3 +33,7 @@ This command goes to Pandora, gets our list of stations, and creates records for
     ./manage auth_rpc_server
 
 That will authenticate with Pandora, and start playing the music. Now your office is ready to control Pandora as a group!
+
+One final thing you may want to do is setup a cron job for keeping your station list up to date. Here's an example:
+
+    30 * * * * /usr/bin/python /path/to/your/project/manage.py build_stations
