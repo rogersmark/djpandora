@@ -30,6 +30,8 @@ def get_song(user):
             'title': 'null',
             'time': 50,
             'album_art': None,
+            'purchase_itunes': None,
+            'purchase_amazon': None,
         },
         'status': 'Stopped',
         'volume': 0,

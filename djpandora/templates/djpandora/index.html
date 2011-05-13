@@ -113,6 +113,7 @@
     }
 
     function display_song_info(data){
+        console.log(data);
         document.title = data['title'] + ' by ' + data['artist'] + ' - DjPandora';
         $('#song-loading').hide();
         $('#song-information').show();
@@ -122,7 +123,9 @@
         $('#time-left').progressbar( "option", "value", data['time']);
         $('#volume-slider').slider('option', 'value', data['volume'] * 100);
         $('#album-image').attr('src', data['album_art']);
+        $('#album-name').text('Album: ' + data['album']);
         $('#station-status').text(data['station_status']);
+        $('#purchase-song').html('Purchase: <a href="' + data['purchase_itunes'] + '">iTunes</a> <a href="' + data['purchase_amazon'] + '">Amazon</a>');
     }
 
     function update_playing(){
@@ -261,6 +264,8 @@
                         <li>Status: <span id='station-status'></span></li>
                         <li id='song-name'></li>
                         <li id='artist-name'></li>
+                        <li id='album-name'></li>
+                        <li id='purchase-song'></li>
                         <li id='vote-total'></li>
                         <li id='voting'></li>
                         <li id='time-left'></li>

@@ -84,6 +84,8 @@ def djpandora_status(request):
         'volume': song_result['volume'],
         'upcoming': song_result['playlist'],
         'recents': song_result['recents'],
+        'purchase_itunes': song_result['song_info']['purchase_itunes'],
+        'purchase_amazon': song_result['song_info']['purchase_amazon'],
         'voting': vote_result,
         'station_voting': poll_results,
         'status': 'success',
