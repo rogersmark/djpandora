@@ -166,6 +166,7 @@ def station_election(user):
                 station.current = False
                 station.save()
             poll.station.current = True
+            poll.station.status = models.Station.PLAY
             poll.station.save()
             poll.save()
         else:
